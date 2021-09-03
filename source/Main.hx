@@ -9,7 +9,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(0, 0, LoadingState));
-		FlxG.autoPause = true;
+		addChild(new FlxGame(0, 0, MainMenuState));
+		FlxG.autoPause = false;
 	}
 }
