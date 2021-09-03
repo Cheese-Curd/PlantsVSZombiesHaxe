@@ -10,13 +10,14 @@ class LoadingState extends FlxState
 	override public function create()
 	{
 		super.create();
+		var fuckingbutton = new FlxButton(0, 0, 'Click me to Start!', function()
+		{
+			FlxG.switchState(new MainMenuState());
+		});
 		// HAXE NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO #2
 		new FlxTimer().start(5, function(tmr:FlxTimer)
 		{
-			new FlxButton(0, 0, 'Click me to Start!', function()
-			{
-				FlxG.switchState(new MainMenuState());
-			});
+			add(fuckingbutton);
 		});
 	}
 
