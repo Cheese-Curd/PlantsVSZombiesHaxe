@@ -19,7 +19,7 @@ class MainMenuState extends FlxState
 		var cursor:FlxSprite;
 
 		// Plays the Main Menu Theme (Dave Intro)
-		FlxG.sound.playMusic('assets/music/main_menu_theme.ogg', 1, true);
+		FlxG.sound.playMusic('assets/music/main_menu_theme.ogg');
 
 		sprite_test = new FlxSprite();
 		cursor = new FlxSprite();
@@ -42,12 +42,14 @@ class MainMenuState extends FlxState
 	{
 		super.onFocusLost();
 		FlxG.sound.music.pause();
+		trace("User Lost Focus the window");
 	}
 
 	override public function onFocus()
 	{
 		super.onFocus();
 		FlxG.sound.music.resume();
+		trace("User Focused the window");
 	}
 
 	override public function update(elapsed:Float)
