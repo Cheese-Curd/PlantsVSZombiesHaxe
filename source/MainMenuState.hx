@@ -3,138 +3,85 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.system.FlxSound;
-import flixel.tweens.FlxTween;
-import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 
 using flixel.util.FlxSpriteUtil;
 
+#if windows
+import discord_rpc.DiscordRpc;
+#end
+
 class MainMenuState extends FlxState
 {
-	var peashooter:FlxSprite;
-	var sunflower:FlxSprite;
-	var frame = 0;
-	var framerate = 30;
+	// background stuff \\
+	var selectMenu:FlxSprite;
+	var selectMenu_normal:FlxSprite;
+	var selectMenu_mask:FlxSprite;
+	var sky:FlxSprite;
+	var background:FlxSprite;
 
 	override public function create()
 	{
+		background = new FlxSprite();
+		background.makeGraphic(800, 600, FlxColor.WHITE);
 		super.create();
+		#if windows
+		// Updating Discord Rich Presence
+		DiscordRpc.presence({
+			details: 'PvZ:Haxe Edition Version [PRIVATE BETA 1]',
+			state: 'In the Main Menu.',
+			largeImageKey: 'logo_haxe',
+			largeImageText: 'Plants VS Zombies: Haxe Edition'
+		});
+		#end
 
 		// Plays the Main Menu Theme (Dave Intro) \\
 		FlxG.sound.playMusic('assets/music/main_menu_theme.ogg');
+		// Background Shit \\
+		sky = new FlxSprite();
+		sky.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_BG.jpg');
+		add(background);
+		// Stupid masking because the actual images are jpegs and not pngs >:c \\
 
-		peashooter = new FlxSprite();
-		sunflower = new FlxSprite();
+		selectMenu = new FlxSprite();
+		selectMenu_normal = new FlxSprite();
+		selectMenu_mask = new FlxSprite();
+		selectMenu_normal.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_BG_Right.jpg');
+		selectMenu_mask.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_BG_Right_.png');
+		FlxSpriteUtil.alphaMaskFlxSprite(selectMenu_normal, selectMenu_mask, selectMenu);
 
-		peashooter.loadGraphic('assets/images/plants/peashooter.png', true, 254, 254);
-		sunflower.loadGraphic('assets/images/plants/sunflower.png', true, 189, 189);
-
-		// Animation \\
-		peashooter.animation.add("idle", framesArray(49), 30, true);
-		sunflower.animation.add("idle", framesArray(54), 30, true);
-		// Antialiasing \\
-		peashooter.antialiasing = true;
-		sunflower.antialiasing = true;
-
-		add(peashooter);
-		add(sunflower);
-		peashooter.x = 0;
-		peashooter.y = 0;
-		sunflower.x = 100;
-		sunflower.y = 0;
-		sunflower.animation.play("idle");
-		peashooter.animation.play("idle");
-		var playbutton = new FlxButton(0, 0, 'MainMenuState', function()
-		{
-			FlxG.switchState(new PlayState());
-			FlxG.sound.music.stop();
-		});
-		add(playbutton);
-	}
-
-	// Animation Frames shit so it doesn't make the file giant \\
-	function framesArray(num:Int)
-	{
-		var array:Array<Int> = new Array<Int>();
-		for (i in 0...num)
-			array.push(i);
-		return array;
-	}
-
-	// HAXE NOOOOOOOOOOOOOOOOOOOOOOOOO
-	override public function onFocusLost()
-	{
-		super.onFocusLost();
-		FlxG.sound.music.pause();
-		trace("User Lost Focus the window");
-	}
-
-	override public function onFocus()
-	{
-		super.onFocus();
-		FlxG.sound.music.resume();
-		trace("User Focused the window");
+		add(sky);
+		add(selectMenu);
+		selectMenu.y = 40;
+		selectMenu.x = 70;
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		if (FlxG.keys.justReleased.SPACE)
+		// Debug \\
+		if (FlxG.keys.justReleased.ENTER)
 		{
-			if (peashooter.animation.name == "idle")
-			{
-				peashooter.animation.pause();
-			}
-			else
-			{
-				peashooter.animation.play("idle");
-			}
+			trace('Y: ' + selectMenu.y);
+			trace('X: ' + selectMenu.x);
 		}
-		if (FlxG.keys.justReleased.RIGHT)
-		{
-			peashooter.animation.curAnim.curFrame = frame;
-			peashooter.animation.pause();
-			frame++;
-			if (frame > 48)
-			{
-				frame = 0;
-			}
-			trace('frame = ' + frame);
-		}
-		if (FlxG.keys.justReleased.LEFT)
-		{
-			peashooter.animation.curAnim.curFrame = frame;
-			peashooter.animation.pause();
-			frame--;
-			if (frame < 0)
-			{
-				frame = 48;
-			}
-			trace('frame = ' + frame);
-		}
-		if (FlxG.keys.justReleased.ESCAPE)
-		{
-			peashooter.animation.curAnim.curFrame = frame;
-			peashooter.animation.resume();
-		}
+		// y \\
 		if (FlxG.keys.justReleased.UP)
 		{
-			peashooter.animation.resume();
-			peashooter.animation.curAnim.frameRate = framerate;
-			framerate++;
-			trace('framerate =' + framerate);
+			selectMenu.y++;
 		}
 		if (FlxG.keys.justReleased.DOWN)
 		{
-			peashooter.animation.resume();
-			peashooter.animation.curAnim.frameRate = framerate;
-			framerate--;
-			if (framerate < 0)
-			{
-				framerate = 1;
-			}
-			trace('framerate =' + framerate);
+			selectMenu.y--;
+		}
+		// x \\
+		if (FlxG.keys.justReleased.RIGHT)
+		{
+			selectMenu.x++;
+		}
+		if (FlxG.keys.justReleased.LEFT)
+		{
+			selectMenu.x--;
 		}
 	}
 }
