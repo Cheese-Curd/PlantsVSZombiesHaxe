@@ -1,5 +1,6 @@
 package;
 
+import AngelUtils; // for masking lol
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -15,8 +16,6 @@ class MainMenuState extends FlxState
 {
 	// background stuff \\
 	var selectMenu:FlxSprite;
-	var selectMenu_normal:FlxSprite;
-	var selectMenu_mask:FlxSprite;
 	var sky:FlxSprite;
 	var background:FlxSprite;
 
@@ -36,24 +35,21 @@ class MainMenuState extends FlxState
 		#end
 
 		// Plays the Main Menu Theme (Dave Intro) \\
-		FlxG.sound.playMusic('assets/music/main_menu_theme.ogg');
+		// FlxG.sound.playMusic('assets/music/main_menu_theme.ogg');
 		// Background Shit \\
 		sky = new FlxSprite();
 		sky.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_BG.jpg');
 		add(background);
 		// Stupid masking because the actual images are jpegs and not pngs >:c \\
 
-		selectMenu = new FlxSprite();
-		selectMenu_normal = new FlxSprite();
-		selectMenu_mask = new FlxSprite();
-		selectMenu_normal.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_BG_Right.jpg');
-		selectMenu_mask.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_BG_Right_.png');
-		FlxSpriteUtil.alphaMaskFlxSprite(selectMenu_normal, selectMenu_mask, selectMenu);
+		selectMenu = AngelUtils.fromAlphaMask('assets/images/menu/mainmenu/SelectorScreen_BG_Center.jpg',
+			'assets/images/menu/mainmenu/SelectorScreen_BG_Center_.png'); // haxe what the fuck is wrong with you
 
 		add(sky);
-		add(selectMenu);
+		add(selectMenu); // thank you Angel for helping me to get the masks to work, and for the Utils <3
 		selectMenu.y = 40;
 		selectMenu.x = 70;
+		sky.scale.set(FlxG.width);
 	}
 
 	override public function update(elapsed:Float)
