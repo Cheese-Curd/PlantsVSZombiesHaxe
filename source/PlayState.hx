@@ -78,15 +78,13 @@ class PlayState extends FlxState
 		switch (planttype)
 		{
 			case 'sunflower':
-				plant.loadGraphic('assets/images/plants/sunflower.png', true, 189, 189);
-				plant.animation.add("idle", framesArray(54), 30, true);
+				trace("sorry mate, I dunno how I'm going to animate this shit lmfao, I have body parts lol");
 			case 'peashooter':
-				plant.loadGraphic('assets/images/plants/peashooter.png', true, 254, 254);
-				plant.animation.add("idle", framesArray(49), 30, true);
+				trace("sorry mate, I dunno how I'm going to animate this shit lmfao, I have body parts lol");
 		};
-		add(plant);
-		plant.antialiasing = true; // just so the sprites don't look bad when doing shit lol
-		plant.animation.play("idle"); // play the animation so they don't stand still
+		// add(plant);
+		// plant.antialiasing = true; // just so the sprites don't look bad when doing shit lol
+		// plant.animation.play("idle"); // play the animation so they don't stand still
 		var menubutton = new FlxButton(FlxG.width, 0, 'MainMenuState', function()
 		{
 			FlxG.switchState(new MainMenuState());
@@ -97,18 +95,6 @@ class PlayState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-
-		// Plant Debug \\
-		if (FlxG.keys.justReleased.S)
-		{
-			planttype = 'sunflower';
-			getPlant();
-		}
-		if (FlxG.keys.justReleased.P)
-		{
-			planttype = 'peashooter';
-			getPlant();
-		}
 
 		// Background Debug \\
 		if (FlxG.keys.justReleased.ENTER)
