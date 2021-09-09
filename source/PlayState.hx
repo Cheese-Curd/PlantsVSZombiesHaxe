@@ -1,5 +1,7 @@
 package;
 
+import AngelUtils; // for json reading
+import DataShit; // getting data
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -10,9 +12,12 @@ class PlayState extends FlxState
 {
 	var planttype = 'peashooter';
 	var plant:FlxSprite;
+	var zombietype = 'basic';
+	var zombie:Zombie;
 	var levelType = 'grass';
 	var background:FlxSprite;
 	var grid:FlxGridOverlay;
+	var gamedata:GameData;
 
 	// ==========Pause shit========== \\
 	var lostfocuspause:FlxSprite;
@@ -46,6 +51,31 @@ class PlayState extends FlxState
 		lostfocuspause = new FlxSprite();
 		getLevel();
 		add(background);
+		var menubutton = new FlxButton(FlxG.width, 0, 'MainMenuState', function()
+		{
+			FlxG.switchState(new MainMenuState()); // error I'm talking about in DataShit.hx
+		});
+		add(menubutton);
+
+		// game data \\
+		gamedata = AngelUtils.JsonifyFile('assets/data/gamedata.json');
+		// Level shit \\
+		if (gamedata.world == "1")
+		{
+			if (gamedata.level == "1" || gamedata.level == "2" || gamedata.level == "3")
+			{
+				levelType = 'grass_dirt';
+			}
+			levelType = 'grass';
+		}
+		else if (gamedata.world == "2")
+		{
+			levelType = 'night';
+		}
+		else if (gamedata.world == "3")
+		{
+			levelType = 'pool';
+		}
 	}
 
 	function getLevel()
@@ -60,6 +90,8 @@ class PlayState extends FlxState
 			case 'grass':
 				background.loadGraphic('assets/images/levels/grassday.jpg');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
+			case 'night':
+				trace('unfinished');
 			case 'pool':
 				trace('unfinished');
 			case 'night_grass':
@@ -73,23 +105,18 @@ class PlayState extends FlxState
 		}
 	}
 
-	function getPlant()
+	function getZombie()
 	{
-		switch (planttype)
+		switch (zombietype)
 		{
-			case 'sunflower':
-				trace("sorry mate, I dunno how I'm going to animate this shit lmfao, I have body parts lol");
-			case 'peashooter':
-				trace("sorry mate, I dunno how I'm going to animate this shit lmfao, I have body parts lol");
+			case 'basic':
+			// zombie = AngelUtils.JsonifyFile('assets/data/zombies/basic.json');
+			case 'cone':
+
+			case 'bucket':
+
+			case 'screendoor':
 		};
-		// add(plant);
-		// plant.antialiasing = true; // just so the sprites don't look bad when doing shit lol
-		// plant.animation.play("idle"); // play the animation so they don't stand still
-		var menubutton = new FlxButton(FlxG.width, 0, 'MainMenuState', function()
-		{
-			FlxG.switchState(new MainMenuState());
-		});
-		add(menubutton);
 	}
 
 	override public function update(elapsed:Float)

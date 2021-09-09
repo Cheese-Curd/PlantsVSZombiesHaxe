@@ -1,0 +1,14 @@
+{
+    "heath": 270,
+    "screendoor": false,
+    "bucket": false,
+    "cone": false,
+    "footbal": false,
+    "vault": false,
+    "pogo": false,
+    "ladder": false,
+    "miner": false,
+    "newspaper": false,
+    "zombony": false,
+    "speed": "normal"
+}
