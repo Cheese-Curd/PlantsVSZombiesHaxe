@@ -1,15 +1,15 @@
 {
-    "heath": 270,
+    "heath": 500,
     "flag": false,
     "screendoor": false,
     "bucket": false,
     "cone": false,
     "football": false,
-    "vault": false,
+    "vault": true,
     "pogo": false,
     "ladder": false,
     "miner": false,
     "newspaper": false,
     "zombony": false,
-    "speed": "normal"
+    "speed": "fast"
 }

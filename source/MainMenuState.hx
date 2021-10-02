@@ -5,8 +5,10 @@ import DataShit; // getting data
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
+import lime.app.Application;
 
 using flixel.util.FlxSpriteUtil;
 
@@ -22,6 +24,8 @@ class MainMenuState extends FlxState
 	var sky:FlxSprite;
 	var backdrop:FlxSprite;
 	var background:FlxSprite;
+	var optionsMenu:FlxSprite;
+	var optionsOpen = false;
 
 	// Select Menu Buttons \\
 	/* ==Menu Button Pathss==
@@ -35,6 +39,10 @@ class MainMenuState extends FlxState
 	var adventure_shadow:FlxSprite;
 	var minigame:FlxButton;
 	var minigame_shadow:FlxSprite;
+	// Pot Buttons \\
+	var options:FlxButton;
+	var help:FlxButton;
+	var quit:FlxButton;
 
 	override public function create()
 	{
@@ -50,14 +58,12 @@ class MainMenuState extends FlxState
 			onError: onError,
 			onDisconnected: onDisconnected
 		});
-
 		DiscordRpc.presence({
-			details: 'Version: [PRIVATE BETA 1]',
+			details: 'Version: [PRIVATE BETA 2]',
 			state: 'In the Main Menu.',
 			largeImageKey: 'discord_rpc_512',
 			largeImageText: 'Plants VS Zombies: Haxe Edition'
 		});
-
 		// Plays the Main Menu Theme (Dave Intro) \\
 		// FlxG.sound.playMusic('assets/music/main_menu_theme.ogg');
 		// Background Shit \\
@@ -90,49 +96,50 @@ class MainMenuState extends FlxState
 	{
 		trace('loaded button function');
 		// Adventure Button \\
+		adventure = new FlxButton(405, 65, "", openAdventure);
 		if (gamedata.newgame == true)
 		{
-			adventure = new FlxButton(405, 65, "", openAdventure);
 			adventure.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_StartAdventure_Button1.png', true, 331, 146);
 			adventure_shadow = new FlxSprite().loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Shadow_StartAdventure.png');
-			adventure_shadow.x = 399;
-			adventure_shadow.y = 66;
-			trace('adventure button');
 		}
 		else
 		{
-			adventure = new FlxButton(405, 65, "", openAdventure);
 			adventure.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Adventure_button.png', true, 331, 146);
 			adventure_shadow = new FlxSprite().loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Shadow_Adventure.png');
-			adventure_shadow.x = 399;
-			adventure_shadow.y = 65;
-			trace('adventure button');
 		}
+		adventure_shadow.x = 399;
+		adventure_shadow.y = 65;
+		trace('adventure button');
 		// Mini-Games Button \\
-		if (gamedata.minigames == true)
+		minigame = new FlxButton(405, 65, "", openMinigames);
+		minigame.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Survival_button.png', true, 313, 133);
+		minigame_shadow = new FlxSprite().loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Shadow_Survival.png');
+		minigame.y = 173;
+		minigame.x = 406;
+		minigame_shadow.x = 407;
+		minigame_shadow.y = 177;
+		if (gamedata.minigames == false)
 		{
-			minigame = new FlxButton(405, 65, "", openMinigames);
-			adventure.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Survival_button.png', true, 331, 146);
-			minigame_shadow = new FlxSprite().loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Shadow_Survival.png');
-			minigame_shadow.x = 399;
-			minigame_shadow.y = 66;
-			trace('Mini-Games button');
+			minigame.color = 0xFF808080;
 		}
-		else
-		{
-			minigame = new FlxButton(405, 65, "", openMinigames);
-			minigame.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Survival_button.png', true, 331, 146);
-			minigame_shadow = new FlxSprite().loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Shadow_Survival.png');
-			minigame_shadow.x = 399;
-			minigame_shadow.y = 65;
-			// minigame.color = 0xFF808080;
-			trace('Mini-Games button');
-		}
+		trace('Mini-Games button');
 
 		add(adventure_shadow);
-		add(adventure);
 		add(minigame_shadow);
+		add(adventure);
 		add(minigame);
+
+		// Pot Buttons \\
+		trace('started Pot Button collection...');
+		options = new FlxButton(565, 490, "", optionsShit);
+		options.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Options.png', true, 81, 31);
+		help = new FlxButton(647, 529, "", helpShit);
+		help.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Help.png', true, 46, 22);
+		quit = new FlxButton(720, 515, "", quitShit);
+		quit.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Quit.png', true, 45, 27);
+		add(options);
+		add(help);
+		add(quit);
 		trace('finished get buttons function');
 	}
 
@@ -160,6 +167,38 @@ class MainMenuState extends FlxState
 		}
 	}
 
+	function optionsShit()
+	{
+		optionsMenu = AngelUtils.fromAlphaMask('assets/images/menu/options_menuback.jpg', 'assets/images/menu/options_menuback_.png', 0, 0);
+		trace('Is the options Menu Open? ' + if (optionsOpen == false)
+		{
+			'No.';
+		} else
+		{
+			'Yes.';
+		});
+		if (optionsOpen == true)
+		{
+			remove(optionsMenu);
+			optionsOpen = false;
+		}
+		else
+		{
+			add(optionsMenu);
+			optionsOpen = true;
+		}
+	}
+
+	function helpShit()
+	{
+		trace("help lol");
+	}
+
+	function quitShit()
+	{
+		lime.system.System.exit(0);
+	}
+
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -172,10 +211,8 @@ class MainMenuState extends FlxState
 		// Debug \\
 		if (FlxG.keys.justReleased.ENTER)
 		{
-			trace('Y: ' + minigame.y);
-			trace('Y: ' + minigame.x);
-			trace('Shadow Y: ' + minigame_shadow.y);
-			trace('Shadow X: ' + minigame_shadow.x);
+			trace(' Y: ' + help.y);
+			trace(' X: ' + help.x);
 		}
 		if (FlxG.keys.justReleased.ESCAPE) {}
 		if (FlxG.keys.justReleased.D)
@@ -191,24 +228,20 @@ class MainMenuState extends FlxState
 		// y \\
 		if (FlxG.keys.justReleased.UP)
 		{
-			minigame.y--;
-			adventure_shadow.y--;
+			help.y--;
 		}
 		if (FlxG.keys.justReleased.DOWN)
 		{
-			minigame.y++;
-			minigame_shadow.y++;
+			help.y++;
 		}
 		// x \\
 		if (FlxG.keys.justReleased.RIGHT)
 		{
-			minigame.x++;
-			minigame_shadow.x++;
+			help.x++;
 		}
 		if (FlxG.keys.justReleased.LEFT)
 		{
-			minigame.x--;
-			minigame_shadow.x--;
+			help.x--;
 		}
 		if (FlxG.keys.justReleased.R)
 		{
@@ -236,7 +269,7 @@ class MainMenuState extends FlxState
 	{
 		// Updating Discord Rich Presence
 		DiscordRpc.presence({
-			details: 'Version: [PRIVATE BETA 1]',
+			details: 'Version: [PRIVATE BETA 2]',
 			state: 'In the Main Menu.',
 			largeImageKey: 'discord_rpc_512',
 			largeImageText: 'Plants VS Zombies: Haxe Edition'

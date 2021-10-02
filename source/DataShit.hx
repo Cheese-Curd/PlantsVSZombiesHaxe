@@ -10,6 +10,14 @@ class DataShit
 
 		UPDATE: it fixed bruh
 	 */
+	public static var zombieType = [
+		'basic', 'conehead', 'buckethead', 'pogo', 'gargantuar', 'ladder', 'digger', 'screendoor', 'football', 'polevault', 'newspaper', 'zombony', 'flag',
+		'fucking_zomboss_lol'
+	];
+	public static var plantType = [
+		'peashooter', 'sunflower', 'repeater', 'potato_mine', 'icepea', 'wallnut', 'tallnut', 'hypnoshroom', 'threepeater', 'puffshroom', 'cattail',
+		'lilypad', 'squash'
+	];
 }
 
 typedef Zombie =
@@ -17,10 +25,11 @@ typedef Zombie =
 	// health dumbass \\
 	var health:Int;
 	// zombie type \\
+	var flag:Bool;
 	var screendoor:Bool;
 	var bucket:Bool;
 	var cone:Bool;
-	var footbal:Bool;
+	var football:Bool;
 	var vault:Bool;
 	var pogo:Bool;
 	var ladder:Bool;
@@ -34,8 +43,9 @@ typedef Zombie =
 typedef GameData =
 {
 	var newgame:Bool;
-	var world:String;
-	var level:String;
+	var world:Int;
+	var level:Int;
 	var minigames:Bool;
 	var survival:Bool;
+	var fastpool:Bool;
 }

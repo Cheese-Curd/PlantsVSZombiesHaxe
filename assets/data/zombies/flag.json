@@ -1,6 +1,6 @@
 {
-    "heath": 270,
-    "flag": false,
+    "heath": 200,
+    "flag": true,
     "screendoor": false,
     "bucket": false,
     "cone": false,

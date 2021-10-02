@@ -1,9 +1,9 @@
 {
-    "heath": 270,
+    "heath": 640,
     "flag": false,
     "screendoor": false,
     "bucket": false,
-    "cone": false,
+    "cone": true,
     "football": false,
     "vault": false,
     "pogo": false,

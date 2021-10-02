@@ -37,7 +37,7 @@ class LoadingState extends FlxState
 			onDisconnected: onDisconnected
 		});
 		DiscordRpc.presence({
-			details: 'Version: [PRIVATE BETA 1]',
+			details: 'Version: [PRIVATE BETA 2]',
 			state: 'Loading...',
 			largeImageKey: 'discord_rpc_512',
 			largeImageText: 'Plants VS Zombies: Haxe Edition'
@@ -94,8 +94,11 @@ class LoadingState extends FlxState
 		remove(popcap_logo);
 		remove(cheese);
 		// Contiue Button Properties \\
+		var loadingtxt:FlxText;
+		loadingtxt = new FlxText(319, 553);
+		loadingtxt.text = "Loading...";
 		continueBttn = new FlxButton(319, 553, "", continuefunc);
-		// continueBttn.color = 0xDAB821;
+
 		// Load the start button image \\
 		continueBttn.loadGraphic('assets/images/menu/loading/strtbttn.png', true, 165, 12);
 		// add background \\
@@ -111,13 +114,16 @@ class LoadingState extends FlxState
 		haxe_edition.font = 'assets/fonts/HouseofTerror-Regular.ttf';
 		add(haxe_edition);
 		// Loading Bar \\
+
 		bar_dirt = new FlxSprite(244, 535).loadGraphic('assets/images/menu/loading/LoadBar_dirt.png');
 		bar_grass = new FlxSprite(243, 520).loadGraphic('assets/images/menu/loading/LoadBar_grass.png');
 		grass_ball = new FlxSprite(231, 484).loadGraphic('assets/images/menu/loading/SodRollCap.png');
 		add(bar_dirt);
 		add(bar_grass);
 		add(grass_ball);
+		add(loadingtxt);
 		// Antialiasing \\
+		loadingtxt.antialiasing = true;
 		haxe_edition.antialiasing = true;
 		bar_dirt.antialiasing = true;
 		bar_grass.antialiasing = true;
@@ -130,9 +136,10 @@ class LoadingState extends FlxState
 		FlxTween.tween(grass_ball, {"scale.x": 0.8, "scale.y": 0.8}, 10, {type: FlxTweenType.ONESHOT}); // oh god he is shrinking oh god
 		new FlxTimer().start(10, function(tmr:FlxTimer)
 		{
+			remove(loadingtxt);
 			add(continueBttn);
 			DiscordRpc.presence({
-				details: 'Version: [PRIVATE BETA 1]',
+				details: 'Version: [PRIVATE BETA 2]',
 				state: 'Waiting for User Input...',
 				largeImageKey: 'discord_rpc_512',
 				largeImageText: 'Plants VS Zombies: Haxe Edition'
@@ -204,7 +211,7 @@ class LoadingState extends FlxState
 	{
 		// Updating Discord Rich Presence
 		DiscordRpc.presence({
-			details: 'Version: [PRIVATE BETA 1]',
+			details: 'Version: [PRIVATE BETA 2]',
 			state: 'Loading...',
 			largeImageKey: 'discord_rpc_512',
 			largeImageText: 'Plants VS Zombies: Haxe Edition'

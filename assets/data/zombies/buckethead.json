@@ -1,8 +1,8 @@
 {
-    "heath": 270,
+    "heath": 1370,
     "flag": false,
     "screendoor": false,
-    "bucket": false,
+    "bucket": true,
     "cone": false,
     "football": false,
     "vault": false,
