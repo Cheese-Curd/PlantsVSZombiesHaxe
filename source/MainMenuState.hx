@@ -89,12 +89,12 @@ class MainMenuState extends FlxState
 
 		// Get the Select Menu Buttons \\
 		getButtons();
-		trace('tried loading buttons');
+		trace('[SYSTEM] tried loading buttons');
 	}
 
 	function getButtons()
 	{
-		trace('loaded button function');
+		trace('[SYSTEM] loaded button function');
 		// Adventure Button \\
 		adventure = new FlxButton(405, 65, "", openAdventure);
 		if (gamedata.newgame == true)
@@ -109,7 +109,7 @@ class MainMenuState extends FlxState
 		}
 		adventure_shadow.x = 399;
 		adventure_shadow.y = 65;
-		trace('adventure button');
+		trace('[SYSTEM] adventure button');
 		// Mini-Games Button \\
 		minigame = new FlxButton(405, 65, "", openMinigames);
 		minigame.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Survival_button.png', true, 313, 133);
@@ -122,7 +122,7 @@ class MainMenuState extends FlxState
 		{
 			minigame.color = 0xFF808080;
 		}
-		trace('Mini-Games button');
+		trace('[SYSTEM] Mini-Games button');
 
 		add(adventure_shadow);
 		add(minigame_shadow);
@@ -130,7 +130,7 @@ class MainMenuState extends FlxState
 		add(minigame);
 
 		// Pot Buttons \\
-		trace('started Pot Button collection...');
+		trace('[SYSTEM] started Pot Button collection...');
 		options = new FlxButton(565, 490, "", optionsShit);
 		options.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Options.png', true, 81, 31);
 		help = new FlxButton(647, 529, "", helpShit);
@@ -140,18 +140,18 @@ class MainMenuState extends FlxState
 		add(options);
 		add(help);
 		add(quit);
-		trace('finished get buttons function');
+		trace('[SYSTEM] finished get buttons function');
 	}
 
 	function openAdventure()
 	{
 		if (gamedata.newgame == true)
 		{
-			trace("New Adventure");
+			trace("[SYSTEM] New Adventure");
 		}
 		else
 		{
-			trace("Resume Adventure");
+			trace("[SYSTEM] Resume Adventure");
 		}
 	}
 
@@ -159,18 +159,18 @@ class MainMenuState extends FlxState
 	{
 		if (gamedata.minigames == true)
 		{
-			trace("MiniGame Unlocked");
+			trace("[SYSTEM] MiniGame Unlocked");
 		}
 		else
 		{
-			trace("MiniGame Locked");
+			trace("[SYSTEM] MiniGame Locked");
 		}
 	}
 
 	function optionsShit()
 	{
 		optionsMenu = AngelUtils.fromAlphaMask('assets/images/menu/options_menuback.jpg', 'assets/images/menu/options_menuback_.png', 0, 0);
-		trace('Is the options Menu Open? ' + if (optionsOpen == false)
+		trace('[OPTIONS MENU] Is the options Menu Open? ' + if (optionsOpen == false)
 		{
 			'No.';
 		} else
@@ -191,28 +191,29 @@ class MainMenuState extends FlxState
 
 	function helpShit()
 	{
-		trace("help lol");
+		trace("[SYSTEM] help lol");
 	}
 
 	function quitShit()
 	{
+		// !!IMPORTANT: GET A MENU BEFORE CLOSING!! \\
 		lime.system.System.exit(0);
 	}
 
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
-		// keep it running when it's a live and kill it when it's not?????? \\
+		// keep it running when it's alive and kill it when it's not?????? \\
 		DiscordRpc.process();
 		if (false)
 		{
 			DiscordRpc.shutdown();
 		}
-		// Debug \\
+		// Debug \\ -- DEBUG HELP: get the DebugStuff.hx file into this project --
 		if (FlxG.keys.justReleased.ENTER)
 		{
-			trace(' Y: ' + help.y);
-			trace(' X: ' + help.x);
+			trace('[DEBUG] Y: ' + help.y);
+			trace('[DEBUG] X: ' + help.x);
 		}
 		if (FlxG.keys.justReleased.ESCAPE) {}
 		if (FlxG.keys.justReleased.D)
@@ -254,14 +255,14 @@ class MainMenuState extends FlxState
 	{
 		super.onFocusLost();
 		FlxG.sound.music.pause();
-		trace("User Lost Focus the window");
+		trace("[SYSTEM] User Lost Focus the window");
 	}
 
 	override public function onFocus()
 	{
 		super.onFocus();
 		FlxG.sound.music.resume();
-		trace("User Focused the window");
+		trace("[SYSTEM] User Focused the window");
 	}
 
 	// I just stole the fuckin' code from the github lol \\
@@ -278,11 +279,11 @@ class MainMenuState extends FlxState
 
 	static function onError(_code:Int, _message:String)
 	{
-		trace('Error! $_code : $_message');
+		trace('[DISCORD RPC] Error! $_code : $_message');
 	}
 
 	static function onDisconnected(_code:Int, _message:String)
 	{
-		trace('Disconnected! $_code : $_message');
+		trace('[DISCORD RPC] Disconnected! $_code : $_message');
 	}
 }
