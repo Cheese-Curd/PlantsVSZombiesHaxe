@@ -35,6 +35,7 @@
 	<assets path="assets/fonts" embed='true'/>
 	<!-- _______________________________ Libraries ______________________________ -->
 
+	<haxelib name="flixel-ui"/>
 	<haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="discord_rpc" if="windows"/>

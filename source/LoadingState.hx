@@ -12,9 +12,11 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import DebugUtils;
 
 class LoadingState extends FlxState
 {
+	var loadingtxt:FlxText;
 	var popcap_logo:FlxSprite;
 	var popcap:FlxText;
 	var cheese:FlxText;
@@ -93,10 +95,9 @@ class LoadingState extends FlxState
 		remove(popcap);
 		remove(popcap_logo);
 		remove(cheese);
+		// Loading Text Properties \\
+		loadingtxt = new FlxText(347, 544, 0, "Loading...", 24);
 		// Contiue Button Properties \\
-		var loadingtxt:FlxText;
-		loadingtxt = new FlxText(319, 553);
-		loadingtxt.text = "Loading...";
 		continueBttn = new FlxButton(319, 553, "", continuefunc);
 
 		// Load the start button image \\
@@ -154,36 +155,13 @@ class LoadingState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
+		DebugUtils.debug(loadingtxt);
 		super.update(elapsed);
 		// keep it running when it's a live and kill it when it's not?????? \\
 		DiscordRpc.process();
 		if (false)
 		{
 			DiscordRpc.shutdown();
-		};
-
-		// y \\
-		if (FlxG.keys.justReleased.UP)
-		{
-			continueBttn.y--;
-		};
-		if (FlxG.keys.justReleased.DOWN)
-		{
-			continueBttn.y++;
-		};
-		// x \\
-		if (FlxG.keys.justReleased.RIGHT)
-		{
-			continueBttn.x++;
-		};
-		if (FlxG.keys.justReleased.LEFT)
-		{
-			continueBttn.x--;
-		};
-		if (FlxG.keys.justReleased.ENTER)
-		{
-			trace('Y: ' + continueBttn.y);
-			trace('X: ' + continueBttn.x);
 		};
 		if (FlxG.keys.justReleased.R)
 		{

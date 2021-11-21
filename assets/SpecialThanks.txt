@@ -15,7 +15,7 @@
 |Plants VS Zombies Team:                      |
 |        PopCap Games - Developer             |
 |        EA Games - Publisher                 |
-|	 Laura Shigihara - Music Artist	      |
+|	     Laura Shigihara - Music Artist	      |
 |        George Fan - Creator                 |
 |=============================================|
 |Plants VS Zombies Haxe Edition Team:         |
@@ -24,8 +24,8 @@
 |        Cheese Curd - Idea                   |
 |        Angel Bot - Extra Utilities          |
 |=============================================================================================|
-|Legal stuff, I think:									      |
-|	All image/sounds/music assets are *NOT* mine, they belong to their respected author.  |
+|Legal stuff, I think:									                                      |
+|	All image/sounds/music assets are *NOT* mine, they belong to their respected author.      |
 |=============================================================================================|
 
 

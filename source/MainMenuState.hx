@@ -1,11 +1,14 @@
 package;
 
+import flixel.text.FlxText;
+import flixel.util.FlxTimer;
 import AngelUtils; // for masking and reading json lol
 import DataShit; // getting data
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
+import flixel.addons.display.FlxExtendedSprite;
+import flixel.group.FlxSpriteGroup;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import lime.app.Application;
@@ -24,8 +27,16 @@ class MainMenuState extends FlxState
 	var sky:FlxSprite;
 	var backdrop:FlxSprite;
 	var background:FlxSprite;
-	var optionsMenu:FlxSprite;
+	// Options Menu \\
+	var optionsMenu:FlxSpriteGroup;
+	var optionsBG:FlxSprite;
+	var optionsOk:FlxButton;
+	var optionsOkText:FlxText;
+	var optionsOkTextShadow:FlxText;
 	var optionsOpen = false;
+	// Options \\
+	var musicVolume:Float;
+	var soundVolume:Float;
 
 	// Select Menu Buttons \\
 	/* ==Menu Button Pathss==
@@ -46,9 +57,15 @@ class MainMenuState extends FlxState
 
 	override public function create()
 	{
+		optionsMenu = new FlxSpriteGroup();
+		// Options Menu \\
+		optionsOk = new FlxButton(29, 380, "", closeOptions);
+		optionsOk.loadGraphic('assets/images/menu/mainmenu/options_backtogamebutton_full.png', true, 360, 100);
+		optionsBG = AngelUtils.fromAlphaMask('assets/images/menu/options_menuback.jpg', 'assets/images/menu/options_menuback_.png', 0, 0);
+		trace('Options Menu Shit loaded');
 		// game data \\
 		gamedata = AngelUtils.JsonifyFile('assets/data/gamedata.json');
-		// everything else \\
+		FlxG.sound.play('assets/sounds/roll_in.ogg');
 		background = new FlxSprite();
 		background.makeGraphic(800, 600, FlxColor.WHITE);
 		super.create();
@@ -145,6 +162,7 @@ class MainMenuState extends FlxState
 
 	function openAdventure()
 	{
+		FlxG.sound.play('assets/sounds/gravebutton.ogg'); // button sound
 		if (gamedata.newgame == true)
 		{
 			trace("[SYSTEM] New Adventure");
@@ -157,6 +175,7 @@ class MainMenuState extends FlxState
 
 	function openMinigames()
 	{
+		FlxG.sound.play('assets/sounds/gravebutton.ogg'); // button sound
 		if (gamedata.minigames == true)
 		{
 			trace("[SYSTEM] MiniGame Unlocked");
@@ -169,37 +188,62 @@ class MainMenuState extends FlxState
 
 	function optionsShit()
 	{
-		optionsMenu = AngelUtils.fromAlphaMask('assets/images/menu/options_menuback.jpg', 'assets/images/menu/options_menuback_.png', 0, 0);
-		trace('[OPTIONS MENU] Is the options Menu Open? ' + if (optionsOpen == false)
+		FlxG.sound.play('assets/sounds/tap.ogg'); // button sound
+		// optionsBG.loadGraphic('assets/images/menu/options_menuback.jpg'); // bg :c
+		trace('[OPTIONS MENU] Is the options Menu Open? ' + optionsOpen);
+		if (optionsOpen == false)
 		{
-			'No.';
-		} else
-		{
-			'Yes.';
-		});
-		if (optionsOpen == true)
-		{
-			remove(optionsMenu);
-			optionsOpen = false;
-		}
-		else
-		{
-			add(optionsMenu);
+			creatingMenu = true;
 			optionsOpen = true;
+			minigame.active = false;
+			adventure.active = false;
+			quit.active = false;
+			help.active = false;
+			options.active = false;
+			optionsMenu.add(optionsBG);
+			optionsMenu.add(optionsOk);
+			add(optionsMenu);
+			optionsMenu.screenCenter();
+			new FlxTimer().start(0.1, (tmr:FlxTimer) ->
+			{
+				creatingMenu = false;
+			});
 		}
+	}
+
+	function closeOptions()
+	{
+		optionsOpen = false;
+		minigame.active = true;
+		adventure.active = true;
+		quit.active = true;
+		help.active = true;
+		options.active = true;
+		FlxG.sound.play('assets/sounds/buttonclick.ogg'); // button sound
+		optionsMenu.x = 0;
+		optionsMenu.y = 0;
+		remove(optionsMenu);
 	}
 
 	function helpShit()
 	{
+		FlxG.sound.play('assets/sounds/tap.ogg'); // button sound
 		trace("[SYSTEM] help lol");
 	}
 
 	function quitShit()
 	{
+		FlxG.sound.play('assets/sounds/tap.ogg'); // button sound
 		// !!IMPORTANT: GET A MENU BEFORE CLOSING!! \\
 		lime.system.System.exit(0);
 	}
-
+	// thanks Angel
+	var draggingMenu:Bool = false;
+	var creatingMenu:Bool = false;
+	var menuPrevX:Float;
+	var menuPrevY:Float;
+	var cursorPrevX:Int;
+	var cursorPrevY:Int;
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -209,45 +253,86 @@ class MainMenuState extends FlxState
 		{
 			DiscordRpc.shutdown();
 		}
-		// Debug \\ -- DEBUG HELP: get the DebugStuff.hx file into this project --
-		if (FlxG.keys.justReleased.ENTER)
-		{
-			trace('[DEBUG] Y: ' + help.y);
-			trace('[DEBUG] X: ' + help.x);
+		// thanks Angel
+		if (FlxG.mouse.justPressed) {
+			if (optionsOpen && !creatingMenu)
+			{
+				// optionsBG < click
+				// optionsMenu < move
+	
+				var inButtonArea:Bool = false;
+				var x1, x2, y1, y2;
+				x1 = optionsOk.getScreenPosition().x;
+				x2 = optionsOk.getScreenPosition().x + optionsOk.width;
+				y1 = optionsOk.getScreenPosition().y;
+				y2 = optionsOk.getScreenPosition().y + optionsOk.height;
+				if (FlxG.mouse.screenX >= x1 && FlxG.mouse.screenX <= x2 && FlxG.mouse.screenY >= y1 && FlxG.mouse.screenY <= y2) inButtonArea = true;
+	
+				if (!inButtonArea)
+				{
+					x1 = optionsBG.getScreenPosition().x;
+					x2 = optionsBG.getScreenPosition().x + optionsBG.width;
+					y1 = optionsBG.getScreenPosition().y;
+					y2 = optionsBG.getScreenPosition().y + optionsBG.height;
+					if (FlxG.mouse.screenX >= x1 && FlxG.mouse.screenX <= x2 && FlxG.mouse.screenY >= y1 && FlxG.mouse.screenY <= y2)
+					{
+						draggingMenu = true;
+						menuPrevX = optionsMenu.x;
+						menuPrevY = optionsMenu.y;
+						cursorPrevX = FlxG.mouse.screenX;
+						cursorPrevY = FlxG.mouse.screenY;
+					}
+				}
+			}
 		}
-		if (FlxG.keys.justReleased.ESCAPE) {}
+
+		if (FlxG.mouse.justReleased)
+		{
+			if (draggingMenu)
+				draggingMenu = false;
+
+			menuPrevX = 0;
+			menuPrevY = 0;
+			cursorPrevX = 0;
+			cursorPrevY = 0;
+		}
+
+		if (FlxG.mouse.pressed)
+		{
+			var offscreen:Bool = (FlxG.mouse.screenX < 0 || FlxG.mouse.screenX > FlxG.width || FlxG.mouse.screenY < 0 || FlxG.mouse.screenY > FlxG.height);
+			if (draggingMenu && !offscreen)
+			{
+				var offsetX = FlxG.mouse.screenX - cursorPrevX;
+				var offsetY = FlxG.mouse.screenY - cursorPrevY;
+				optionsMenu.x = menuPrevX + offsetX;
+				optionsMenu.y = menuPrevY + offsetY;
+			}
+		}
+		// now back to me lol
+		// Debug \\
+		#if debug
 		if (FlxG.keys.justReleased.D)
 		{
 			remove(tree);
 			remove(selectMenu);
+			remove(backdrop);
+			remove(background);
+			remove(sky);
 		}
 		if (FlxG.keys.justReleased.A)
 		{
 			add(tree);
 			add(selectMenu);
+			add(backdrop);
+			add(background);
+			add(sky);
 		}
-		// y \\
-		if (FlxG.keys.justReleased.UP)
-		{
-			help.y--;
-		}
-		if (FlxG.keys.justReleased.DOWN)
-		{
-			help.y++;
-		}
-		// x \\
-		if (FlxG.keys.justReleased.RIGHT)
-		{
-			help.x++;
-		}
-		if (FlxG.keys.justReleased.LEFT)
-		{
-			help.x--;
-		}
-		if (FlxG.keys.justReleased.R)
+		DebugUtils.debug(optionsOk);
+		if (FlxG.keys.justReleased.R) // refresh lol
 		{
 			FlxG.switchState(new LoadingState());
 		}
+		#end
 	}
 
 	// Audio Pausing \\

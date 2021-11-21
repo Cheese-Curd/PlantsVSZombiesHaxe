@@ -8,6 +8,7 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.ui.FlxButton;
+import DebugUtils; // Funny debug
 
 class PlayState extends FlxState
 {
@@ -208,39 +209,7 @@ class PlayState extends FlxState
 				gamedata.level = 1;
 			};
 		}
-		// Background Debug \\
-		if (FlxG.keys.justReleased.ENTER)
-		{
-			trace('Y: ' + background.y);
-			trace('X: ' + background.x);
-		}
-		// y \\
-		if (FlxG.keys.justReleased.UP)
-		{
-			background.y++;
-		}
-		if (FlxG.keys.justReleased.DOWN)
-		{
-			background.y--;
-		}
-		// x \\
-		if (FlxG.keys.justReleased.RIGHT)
-		{
-			background.x++;
-		}
-		if (FlxG.keys.justReleased.LEFT)
-		{
-			background.x--;
-		}
-		// scale \\
-		if (FlxG.keys.justReleased.MINUS)
-		{
-			background.scale.set(background.scale.x - 0.1);
-		}
-		if (FlxG.keys.justReleased.PLUS)
-		{
-			background.scale.set(background.scale.x + 0.1);
-		}
+		//DebugUtils.debug(background);
 		if (FlxG.keys.justReleased.G)
 		{
 			if (levelType == 'grass_dirt')

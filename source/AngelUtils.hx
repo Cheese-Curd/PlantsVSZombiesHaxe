@@ -1,5 +1,6 @@
 package;
 
+import flixel.addons.display.FlxExtendedSprite;
 import flixel.FlxSprite;
 import flixel.util.FlxSpriteUtil;
 import haxe.Json;
