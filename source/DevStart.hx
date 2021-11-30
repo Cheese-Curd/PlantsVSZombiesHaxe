@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.FlxG;
 import flixel.FlxState;
@@ -18,13 +19,15 @@ class DevStart extends FlxState
 	var logintext:FlxText;
 	var loginbutton:FlxButton;
 	var loginbox:FlxUIInputText; // no fucking idea if this is the actuall thing for a text box, probably not, but can't check ;)
+	var defaultlogintext = 'PRIVATE DEV BUILD 2 LOGIN';
 	var password = 'hehedev';
 	
 	override public function create()
 	{
-		logintext = new FlxText(0,0, 'PRIVATE DEV BUILD 2 LOGIN');
+		logintext = new FlxText(0,0, defaultlogintext);
 		loginbutton = new FlxButton(27,36, 'LOGIN', check);
-		loginbox = new FlxUIInputText(15,16, 100, 'yes');
+		loginbox = new FlxUIInputText(15,16, 100);
+		loginbox.passwordMode = true;
 		add(logintext);
 		add(loginbutton);
 		add(loginbox);
@@ -40,8 +43,16 @@ class DevStart extends FlxState
 		else 
 		{
 			trace('[SYSTEM] User Failed to login into Dev build');
-			loginbox.text = 'Wrong password dumbass';
+			// loginbox.text = 'Wrong password dumbass';
+			logintext.text = 'WRONG PASSWORD DUMBASS';
+			logintext.color = 0xFFFF0000;
+			new FlxTimer().start(1, function(tmr)
+			{
+				logintext.text = defaultlogintext;
+				logintext.color = 0xFFFFFFFF;
+			});
 		}
+		loginbox.text = '';
 	}
 	
 	override public function update(elapsed:Float)

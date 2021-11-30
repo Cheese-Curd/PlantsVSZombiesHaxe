@@ -28,6 +28,8 @@ class LoadingState extends FlxState
 	var bar_grass:FlxSprite;
 	var grass_ball:FlxSprite;
 	var continueBttn:FlxButton;
+	// fade shit \\
+	var black:FlxSprite;
 
 	override public function create()
 	{
@@ -48,9 +50,12 @@ class LoadingState extends FlxState
 		FlxG.sound.playMusic('assets/music/main_menu_theme.ogg');
 		FlxAssets.FONT_DEFAULT = 'assets/fonts/Brianne_s_hand.ttf';
 		popcap = new FlxText(260, 38, 339, 'Plants VS Zombies made by:', 24);
+		popcap.alpha = 0;
 		cheese = new FlxText(237, 377, 433, 'Haxe Edition made by: Cheese Curd', 24);
+		cheese.alpha = 0;
 
 		popcap_logo = new FlxSprite(250, 65).loadGraphic('assets/images/menu/loading/PopCap_Logo.jpg');
+		popcap_logo.alpha = 0;
 
 		add(popcap);
 		add(cheese);
@@ -64,9 +69,6 @@ class LoadingState extends FlxState
 
 	function fadeAnimation()
 	{
-		popcap_logo.alpha = 0;
-		popcap.alpha = 0;
-		cheese.alpha = 0;
 		FlxTween.tween(popcap_logo, {alpha: 1}, 2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(popcap, {alpha: 1}, 2, {ease: FlxEase.expoInOut});
 		new FlxTimer().start(0.8, function(tmr:FlxTimer)
@@ -81,7 +83,6 @@ class LoadingState extends FlxState
 
 	function textPlay()
 	{
-		FlxTween.tween(cheese, {alpha: 1}, 1.4, {ease: FlxEase.expoInOut});
 		new FlxTimer().start(3.0, function(tmr:FlxTimer)
 		{
 			trace('Should have switched to main loading');
@@ -91,60 +92,71 @@ class LoadingState extends FlxState
 
 	function mainLoading()
 	{
-		// remove everything not needed \\
-		remove(popcap);
-		remove(popcap_logo);
-		remove(cheese);
-		// Loading Text Properties \\
-		loadingtxt = new FlxText(347, 544, 0, "Loading...", 24);
-		// Contiue Button Properties \\
-		continueBttn = new FlxButton(319, 553, "", continuefunc);
-
-		// Load the start button image \\
-		continueBttn.loadGraphic('assets/images/menu/loading/strtbttn.png', true, 165, 12);
-		// add background \\
-		var background:FlxSprite;
-		background = new FlxSprite().loadGraphic('assets/images/menu/loading/titlescreen.jpg');
-		// PvZ Logo \\
-		pvz_logo = AngelUtils.fromAlphaMask('assets/images/menu/loading/PvZ_Logo.jpg', 'assets/images/menu/loading/PvZ_Logo_.png', 51, 10);
-		add(background);
-		add(pvz_logo);
-		// Haxe Edition Text \\
-		haxe_edition = new FlxText(305, 117, 216, 'Haxe Edition', 36);
-		haxe_edition.color = FlxColor.BLACK;
-		haxe_edition.font = 'assets/fonts/HouseofTerror-Regular.ttf';
-		add(haxe_edition);
-		// Loading Bar \\
-
-		bar_dirt = new FlxSprite(244, 535).loadGraphic('assets/images/menu/loading/LoadBar_dirt.png');
-		bar_grass = new FlxSprite(243, 520).loadGraphic('assets/images/menu/loading/LoadBar_grass.png');
-		grass_ball = new FlxSprite(231, 484).loadGraphic('assets/images/menu/loading/SodRollCap.png');
-		add(bar_dirt);
-		add(bar_grass);
-		add(grass_ball);
-		add(loadingtxt);
-		// Antialiasing \\
-		loadingtxt.antialiasing = true;
-		haxe_edition.antialiasing = true;
-		bar_dirt.antialiasing = true;
-		bar_grass.antialiasing = true;
-		grass_ball.antialiasing = true;
-		pvz_logo.antialiasing = true;
-		// Moving the grass thing \\
-		/* [INSERT GRASS MASKING CODE HERE] */
-		FlxTween.tween(grass_ball, {angle: 360.0}, 5, {type: FlxTweenType.LOOPING}); // speeeen
-		FlxTween.tween(grass_ball, {x: 508}, 10, {type: FlxTweenType.ONESHOT}); // yo, he movin'
-		FlxTween.tween(grass_ball, {"scale.x": 0.8, "scale.y": 0.8}, 10, {type: FlxTweenType.ONESHOT}); // oh god he is shrinking oh god
-		new FlxTimer().start(10, function(tmr:FlxTimer)
+		FlxTween.tween(popcap_logo, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(popcap, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(cheese, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
+		new FlxTimer().start(2, function(tmr)
 		{
-			remove(loadingtxt);
-			add(continueBttn);
-			DiscordRpc.presence({
-				details: 'Version: [PRIVATE BETA 2]',
-				state: 'Waiting for User Input...',
-				largeImageKey: 'discord_rpc_512',
-				largeImageText: 'Plants VS Zombies: Haxe Edition'
+			// remove everything not needed \\
+			remove(popcap);
+			remove(popcap_logo);
+			remove(cheese);
+			// Loading Text Properties \\
+			loadingtxt = new FlxText(347, 544, 0, "Loading...", 24);
+			// Contiue Button Properties \\
+			continueBttn = new FlxButton(319, 553, "", continuefunc);
+	
+			// Load the start button image \\
+			continueBttn.loadGraphic('assets/images/menu/loading/strtbttn.png', true, 165, 12);
+			// add background \\
+			var background:FlxSprite;
+			background = new FlxSprite().loadGraphic('assets/images/menu/loading/titlescreen.jpg');
+			// PvZ Logo \\
+			pvz_logo = AngelUtils.fromAlphaMask('assets/images/menu/loading/PvZ_Logo.jpg', 'assets/images/menu/loading/PvZ_Logo_.png', 51, 10);
+			add(background);
+			add(pvz_logo);
+			// Haxe Edition Text \\
+			haxe_edition = new FlxText(305, 117, 216, 'Haxe Edition', 36);
+			haxe_edition.color = FlxColor.BLACK;
+			haxe_edition.font = 'assets/fonts/HouseofTerror-Regular.ttf';
+			add(haxe_edition);
+			// Loading Bar \\
+	
+			bar_dirt = new FlxSprite(244, 535).loadGraphic('assets/images/menu/loading/LoadBar_dirt.png');
+			bar_grass = new FlxSprite(243, 520).loadGraphic('assets/images/menu/loading/LoadBar_grass.png');
+			grass_ball = new FlxSprite(231, 484).loadGraphic('assets/images/menu/loading/SodRollCap.png');
+			add(bar_dirt);
+			add(bar_grass);
+			add(grass_ball);
+			add(loadingtxt);
+			// Antialiasing \\
+			loadingtxt.antialiasing = true;
+			haxe_edition.antialiasing = true;
+			bar_dirt.antialiasing = true;
+			bar_grass.antialiasing = true;
+			grass_ball.antialiasing = true;
+			pvz_logo.antialiasing = true;
+			// Moving the grass thing \\
+			/* [INSERT GRASS MASKING CODE HERE] */
+			FlxTween.tween(grass_ball, {angle: 360.0}, 5, {type: FlxTweenType.LOOPING}); // speeeen
+			FlxTween.tween(grass_ball, {x: 508}, 10, {type: FlxTweenType.ONESHOT}); // yo, he movin'
+			FlxTween.tween(grass_ball, {"scale.x": 0.8, "scale.y": 0.8}, 10, {type: FlxTweenType.ONESHOT}); // oh god he is shrinking oh god
+			new FlxTimer().start(10, function(tmr:FlxTimer)
+			{
+				remove(loadingtxt);
+				add(continueBttn);
+				DiscordRpc.presence({
+					details: 'Version: [PRIVATE BETA 2]',
+					state: 'Waiting for User Input...',
+					largeImageKey: 'discord_rpc_512',
+					largeImageText: 'Plants VS Zombies: Haxe Edition'
+				});
 			});
+
+			// fade shit \\
+			black = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+			add(black);
+			FlxTween.tween(black, {alpha: 0}, 2, {onComplete: function(tween) remove(black)});
 		});
 	}
 

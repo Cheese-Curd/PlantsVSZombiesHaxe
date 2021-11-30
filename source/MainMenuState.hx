@@ -350,7 +350,7 @@ class MainMenuState extends FlxState
 		lime.system.System.exit(0);
 	}
 
-	// thanks Angel
+	// thanks Angel // Angel: no problem bud
 	var draggingMenu:Bool = false;
 	var creatingMenu:Bool = false;
 	var menuPrevX:Float;
@@ -367,7 +367,7 @@ class MainMenuState extends FlxState
 		{
 			DiscordRpc.shutdown();
 		}
-		// thanks Angel
+		// thanks Angel // Angel: no problem my dude
 		if (FlxG.mouse.justPressed)
 		{
 			if (optionsOpen && !creatingMenu)
@@ -415,13 +415,16 @@ class MainMenuState extends FlxState
 
 		if (FlxG.mouse.pressed)
 		{
-			var offscreen:Bool = (FlxG.mouse.screenX < 0 || FlxG.mouse.screenX > FlxG.width || FlxG.mouse.screenY < 0 || FlxG.mouse.screenY > FlxG.height);
-			if (draggingMenu && !offscreen)
+			//var offscreen:Bool = (FlxG.mouse.screenX < 0 || FlxG.mouse.screenX > FlxG.width || FlxG.mouse.screenY < 0 || FlxG.mouse.screenY > FlxG.height);
+			if (draggingMenu /* && !offscreen */)
 			{
-				var offsetX = FlxG.mouse.screenX - cursorPrevX;
-				var offsetY = FlxG.mouse.screenY - cursorPrevY;
-				optionsMenu.x = menuPrevX + offsetX;
-				optionsMenu.y = menuPrevY + offsetY;
+				//var offsetX = FlxG.mouse.screenX - cursorPrevX;
+				//var offsetY = FlxG.mouse.screenY - cursorPrevY;
+				// Angel: ditched the variables since they take up more memory, especially if this runs every frame of the game
+				
+				optionsMenu.x = menuPrevX + (FlxG.mouse.screenX - cursorPrevX);
+				optionsMenu.y = menuPrevY + (FlxG.mouse.screenY - cursorPrevY);
+				AngelUtils.bounceToFrame(optionsMenu); // Angel: don't even say it Cheese, you're welcome
 			}
 		}
 		// now back to me lol
