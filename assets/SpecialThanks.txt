@@ -24,8 +24,8 @@
 |        Cheese Curd - Idea                   |
 |        Angel Bot - Extra Utilities          |
 |=============================================================================================|
-|Legal stuff, I think:									                                                      |
-|	  All image/sounds/music assets are *NOT* mine, they belong to their respected author.      |
+|Legal stuff, I think:									      |
+|	  All image/sounds/music assets are *NOT* mine, they belong to their respected author.|
 |=============================================================================================|
 
 
