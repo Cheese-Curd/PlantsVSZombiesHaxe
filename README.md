@@ -85,4 +85,4 @@ then again if you use VSCode just press your debug button (default `F5`)
 ### Plants VS Zombies Haxe Edition Team:
 Cheese Curd - *Lead Developer*\
 [Angel Bot](https://github.com/AngelDTF) - *Extra Utilities*
-###### *haha it's all me! Except for Angel-*\
+###### *haha it's all me! Except for Angel-*
