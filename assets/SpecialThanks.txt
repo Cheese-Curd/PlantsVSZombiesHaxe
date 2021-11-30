@@ -15,7 +15,7 @@
 |Plants VS Zombies Team:                      |
 |        PopCap Games - Developer             |
 |        EA Games - Publisher                 |
-|	     Laura Shigihara - Music Artist	      |
+|        Laura Shigihara - Music Artist	      |
 |        George Fan - Creator                 |
 |=============================================|
 |Plants VS Zombies Haxe Edition Team:         |
