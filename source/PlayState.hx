@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxSave;
 import AngelUtils; // for json reading
 import DataShit; // getting data
 import discord_rpc.DiscordRpc;
@@ -19,7 +20,8 @@ class PlayState extends FlxState
 	var levelType = 'grass';
 	var background:FlxSprite;
 	var grid:FlxGridOverlay;
-	var gamedata:GameData;
+	var _gamedata:FlxSave;
+	var menuButton:FlxButton;
 
 	// ==========Pause shit========== \\
 	var lostfocuspause:FlxSprite;
@@ -49,47 +51,50 @@ class PlayState extends FlxState
 		super.create();
 
 		plant = new FlxSprite();
-		background = new FlxSprite();
+		background = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
 		getLevel();
 		add(background);
-		var menubutton = new FlxButton(FlxG.width, 0, 'MainMenuState', function()
-		{
-			FlxG.switchState(new MainMenuState()); // error I'm talking about in DataShit.hx
-		});
-		add(menubutton);
+		menuButton = new FlxButton(681, -12, '', pauseBitch);
+		menuButton.loadGraphic('assets/images/menu/inGamePause.png', true, 117, 48);
+		add(menuButton);
 
 		// game data \\
-		gamedata = AngelUtils.JsonifyFile('assets/data/gamedata.json');
+		_gamedata = new FlxSave();
+		_gamedata.bind("Save");
 		// Level shit \\
-		if (gamedata.world == 1)
+		if (_gamedata.data.world == 1)
 		{
-			if (gamedata.level == 1 || gamedata.level == 2 || gamedata.level == 3)
+			if (_gamedata.data.level == 1 || _gamedata.data.level == 2 || _gamedata.data.level == 3)
 			{
 				levelType = 'grass_dirt';
 			}
 			levelType = 'grass';
 		}
-		else if (gamedata.world == 2)
+		else if (_gamedata.data.world == 2)
 		{
 			levelType = 'night';
 		}
-		else if (gamedata.world == 3)
+		else if (_gamedata.data.world == 3)
 		{
 			levelType = 'pool';
 		}
-		else if (gamedata.world == 4)
+		else if (_gamedata.data.world == 4)
 		{
 			levelType = 'pool_night';
 		}
-		else if (gamedata.world == 5)
+		else if (_gamedata.data.world == 5)
 		{
 			levelType = 'roof';
 		}
-		else if (gamedata.world == 6)
+		else if (_gamedata.data.world == 6)
 		{
 			levelType = 'roof_night';
 		}
+	}
+
+	function pauseBitch() {
+		
 	}
 
 	function getLevel()
@@ -104,9 +109,8 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday_dirt.jpg');
+				background.loadGraphic('assets/images/levels/grassday/grassday_dirt.jpg');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
-				background.x = -219;
 			case 'grass':
 				DiscordRpc.presence({
 					details: 'Version: [PRIVATE BETA 2]',
@@ -114,7 +118,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday.jpg');
+				background.loadGraphic('assets/images/levels/grassday/grassday.jpg');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'night':
 				DiscordRpc.presence({
@@ -123,7 +127,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassnight.jpg');
+				background.loadGraphic('assets/images/levels/grassnight/grassnight.jpg');
 				FlxG.sound.playMusic('assets/music/moongrains.ogg');
 			case 'pool':
 				DiscordRpc.presence({
@@ -132,8 +136,8 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/poolday.jpg');
-				if (gamedata.fastpool == true)
+				background.loadGraphic('assets/images/levels/poolday/poolday.jpg');
+				if (_gamedata.data.fastpool == true)
 				{
 					FlxG.sound.playMusic('assets/music/watery_graves_fast.ogg'); // faster
 				}
@@ -148,18 +152,18 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/poolnight.jpg');
+				background.loadGraphic('assets/images/levels/poolnight/poolnight.jpg');
 				FlxG.sound.playMusic('assets/music/rigor_moris.ogg'); // play fog music and stuff
 			case 'roof':
 				DiscordRpc.presence({
 					details: 'Version: [PRIVATE BETA 2]',
 					state: 'Playing Adventure',
 					smallImageKey: 'discord_rpc_512_adventure',
-					smallImageText: 'Playing: ' + gamedata.world + '-' + gamedata.level,
+					smallImageText: 'Playing: ' + _gamedata.data.world + '-' + _gamedata.data.level,
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/roofday.jpg');
+				background.loadGraphic('assets/images/levels/roofday/roofday.jpg');
 				FlxG.sound.playMusic('assets/music/graze_the_roof.ogg');
 			case 'roof_night':
 				DiscordRpc.presence({
@@ -170,7 +174,7 @@ class PlayState extends FlxState
 					smallImageText: 'holy shit they are about to beat the game, partly',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/roofnight.jpg');
+				background.loadGraphic('assets/images/levels/roofnight/roofnight.jpg');
 				FlxG.sound.playMusic('assets/music/brainiac_maniac.ogg');
 		}
 	}
@@ -195,21 +199,23 @@ class PlayState extends FlxState
 
 		if (FlxG.keys.justPressed.PERIOD)
 		{
-			gamedata.world++;
-			if (gamedata.world > 6)
+			_gamedata.data.world++;
+			if (_gamedata.data.world > 6)
 			{
-				gamedata.world = 1;
+				_gamedata.data.world = 1;
 			};
+			getLevel();
 		}
 		if (FlxG.keys.justPressed.COMMA)
 		{
-			gamedata.level++;
-			if (gamedata.level > 3)
+			_gamedata.data.level++;
+			if (_gamedata.data.level > 3)
 			{
-				gamedata.level = 1;
+				_gamedata.data.level = 1;
 			};
+			getLevel();
 		}
-		//DebugUtils.debug(background);
+			DebugUtils.debug(menuButton);
 		if (FlxG.keys.justReleased.G)
 		{
 			if (levelType == 'grass_dirt')

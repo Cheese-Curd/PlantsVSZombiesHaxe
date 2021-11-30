@@ -40,12 +40,14 @@ typedef Zombie =
 	var speed:String;
 }
 
-typedef GameData =
-{
-	var newgame:Bool;
-	var world:Int;
-	var level:Int;
-	var minigames:Bool;
-	var survival:Bool;
-	var fastpool:Bool;
-}
+// Depricated, due to new saving process. \\
+
+// typedef GameData =
+// {
+// 	var newgame:Bool;
+// 	var world:Int;
+// 	var level:Int;
+// 	var minigames:Bool;
+// 	var survival:Bool;
+// 	var fastpool:Bool;
+// }

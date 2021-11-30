@@ -1,5 +1,7 @@
 package;
 
+import flixel.util.FlxSave;
+import flixel.addons.ui.FlxUIInputText;
 import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import AngelUtils; // for masking and reading json lol
@@ -7,11 +9,9 @@ import DataShit; // getting data
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.addons.display.FlxExtendedSprite;
 import flixel.group.FlxSpriteGroup;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import lime.app.Application;
 
 using flixel.util.FlxSpriteUtil;
 
@@ -45,7 +45,7 @@ class MainMenuState extends FlxState
 		Adventure: 'assets/images/menu/mainmenu/SelectorScreen_Adventure_Button.png'
 		Adventure Shadow: 'assets/images/menu/mainmenu/SelectorScreen_Shadow_Adventure.png'
 	 */
-	var gamedata:GameData;
+	var _gamedata:FlxSave;
 	var adventure:FlxButton;
 	var adventure_shadow:FlxSprite;
 	var minigame:FlxButton;
@@ -54,17 +54,41 @@ class MainMenuState extends FlxState
 	var options:FlxButton;
 	var help:FlxButton;
 	var quit:FlxButton;
+	// Funny Wood \\
+	var woodName:FlxSprite;
+	var woodUsrSwitch:FlxButton;
+	var woodUsrName:FlxText;
+	var woodBroken:FlxSprite;
+	var name:String = 'No Name'; // will change I swear
 
 	override public function create()
 	{
+		FlxG.sound.music.pause(); // for when transitioning back from help
+		if (FlxG.sound.music.playing)
+		{
+			FlxG.sound.music.resume();
+		}
+		else
+		{
+			FlxG.sound.music.play();
+		}
+
+		// wood buttons \\
+
+		woodName = new FlxSprite(22, -8).loadGraphic('assets/images/menu/mainmenu/SelectorScreen_WoodSign1.png');
+		woodUsrSwitch = new FlxButton(25, 126);
+		woodUsrSwitch.loadGraphic('assets/images/menu/mainmenu/ScreenSelector_WoodSign_Button.png', true, 291, 71);
+		woodUsrName = new FlxText(147, 86);
+		woodUsrName.setFormat('assets/fonts/Brianne_s_hand.ttf', 18, 0xFFF5C8, CENTER); // WHY IS THE E DIFFERENTTTTTTTTTTTTTTTTTT
+		woodUsrName.text = name + '!';
+		woodBroken = new FlxSprite(32, 179).loadGraphic('assets/images/menu/mainmenu/SelectorScreen_WoodSign3.png');
+
 		optionsMenu = new FlxSpriteGroup();
 		// Options Menu \\
 		optionsOk = new FlxButton(29, 380, "", closeOptions);
 		optionsOk.loadGraphic('assets/images/menu/mainmenu/options_backtogamebutton_full.png', true, 360, 100);
 		optionsBG = AngelUtils.fromAlphaMask('assets/images/menu/options_menuback.jpg', 'assets/images/menu/options_menuback_.png', 0, 0);
 		trace('Options Menu Shit loaded');
-		// game data \\
-		gamedata = AngelUtils.JsonifyFile('assets/data/gamedata.json');
 		FlxG.sound.play('assets/sounds/roll_in.ogg');
 		background = new FlxSprite();
 		background.makeGraphic(800, 600, FlxColor.WHITE);
@@ -93,20 +117,71 @@ class MainMenuState extends FlxState
 		tree = AngelUtils.fromAlphaMask('assets/images/menu/mainmenu/SelectorScreen_BG_Left.jpg', 'assets/images/menu/mainmenu/SelectorScreen_BG_Left_.png',
 			0, -80);
 		backdrop = AngelUtils.fromAlphaMask('assets/images/menu/mainmenu/SelectorScreen_BG_Center.jpg',
-			'assets/images/menu/mainmenu/SelectorScreen_BG_Center_.png', 40, 250);
+			'assets/images/menu/mainmenu/SelectorScreen_BG_Center_.png', 103, 250);
 		add(sky);
 		add(backdrop);
 		sky.setGraphicSize(800, 600);
 		sky.updateHitbox();
 		add(tree);
 		add(selectMenu); // thank you Angel for helping me to get the masks to work, and for the Utils <3
-		backdrop.setGraphicSize(800, 350);
+		backdrop.setGraphicSize(778, 350); // not exact, but close
 		// selectMenu.y = 40;
 		// selectMenu.x = 70;
-
+		add(woodName);
+		add(woodUsrSwitch);
+		add(woodBroken);
+		add(woodUsrName);
 		// Get the Select Menu Buttons \\
 		getButtons();
 		trace('[SYSTEM] tried loading buttons');
+		doShit();
+		trace("Doing shit?");
+	}
+
+	var nameTitle:FlxText;
+	var nameSubTitle:FlxText;
+	var nameInput:FlxUIInputText;
+	var nameSubmit:FlxButton;
+
+	function doShit()
+	{
+		trace('Animation not finished.');
+
+		if (name == 'No Name')
+		{
+			nameTitle = new FlxText(337.5, 241);
+			nameTitle.setFormat('assets/fonts/DWARVESC.ttf', 24, 0xFFF5C8, CENTER);
+			nameTitle.y -= 45;
+			nameTitle.text = 'new user';
+			nameSubTitle = new FlxText(279, 275);
+			nameSubTitle.setFormat('assets/fonts/DWARVESC.ttf', 18, 0xFFF5C8, CENTER);
+			nameSubTitle.y -= 25;
+			nameSubTitle.text = 'Please enter your name:';
+
+			nameInput = new FlxUIInputText(350, 289, 100, '');
+			nameInput.setFormat('assets/fonts/DWARVESC.ttf', 18, 0xFFF5C8, CENTER);
+			nameInput.maxLength = 13; // one extra just to have the ability to have the '!', will remove the last character if it's 13 though
+
+			nameSubmit = new FlxButton(288, 320, 'Ok', submitName);
+
+			add(nameTitle);
+			add(nameSubTitle);
+			add(nameInput);
+			add(nameSubmit);
+		}
+
+		trace("Continuing to main Function.");
+	}
+
+	function submitName()
+	{
+		name = nameInput.text;
+		woodUsrName.text = name + '!';
+		trace('Set name to ' + name);
+		remove(nameTitle);
+		remove(nameSubTitle);
+		remove(nameInput);
+		remove(nameSubmit);
 	}
 
 	function getButtons()
@@ -114,7 +189,25 @@ class MainMenuState extends FlxState
 		trace('[SYSTEM] loaded button function');
 		// Adventure Button \\
 		adventure = new FlxButton(405, 65, "", openAdventure);
-		if (gamedata.newgame == true)
+		// game data \\
+		trace("[SYSTEM] trying to load game save data...");
+		_gamedata = new FlxSave();
+		_gamedata.bind("Save");	
+		if (_gamedata.data.newgame == null)
+		{
+			trace("[GAME DATA] Failed!"); 
+
+			_gamedata.data.newgame = true;
+			_gamedata.data.world = 1;
+			_gamedata.data.level = 1;
+			_gamedata.data.minigames = false;
+			_gamedata.data.survival = false;
+			_gamedata.data.fastpool = false;
+
+			_gamedata.flush();
+			trace("[GAME DATA] Reset back to default.");
+		}
+		if (_gamedata.data.newgame == true)
 		{
 			adventure.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_StartAdventure_Button1.png', true, 331, 146);
 			adventure_shadow = new FlxSprite().loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Shadow_StartAdventure.png');
@@ -135,7 +228,7 @@ class MainMenuState extends FlxState
 		minigame.x = 406;
 		minigame_shadow.x = 407;
 		minigame_shadow.y = 177;
-		if (gamedata.minigames == false)
+		if (_gamedata.data.minigames == false)
 		{
 			minigame.color = 0xFF808080;
 		}
@@ -163,7 +256,8 @@ class MainMenuState extends FlxState
 	function openAdventure()
 	{
 		FlxG.sound.play('assets/sounds/gravebutton.ogg'); // button sound
-		if (gamedata.newgame == true)
+
+		if (_gamedata.data.newgame == true)
 		{
 			trace("[SYSTEM] New Adventure");
 		}
@@ -171,12 +265,26 @@ class MainMenuState extends FlxState
 		{
 			trace("[SYSTEM] Resume Adventure");
 		}
+
+		trace("[SYSTEM] Animation not finished!");
+
+		FlxG.sound.music.stop();
+		FlxG.sound.play('assets/sounds/losemusic.ogg');
+		new FlxTimer().start(1.5, (tmr:FlxTimer) ->
+		{
+			FlxG.sound.play('assets/sounds/evillaugh.ogg');
+		});
+
+		new FlxTimer().start(6.5, (tmr:FlxTimer) ->
+		{
+			FlxG.switchState(new PlayState());
+		});
 	}
 
 	function openMinigames()
 	{
 		FlxG.sound.play('assets/sounds/gravebutton.ogg'); // button sound
-		if (gamedata.minigames == true)
+		if (_gamedata.data.minigames == true)
 		{
 			trace("[SYSTEM] MiniGame Unlocked");
 		}
@@ -228,7 +336,11 @@ class MainMenuState extends FlxState
 	function helpShit()
 	{
 		FlxG.sound.play('assets/sounds/tap.ogg'); // button sound
-		trace("[SYSTEM] help lol");
+		FlxG.sound.music.stop();
+		new FlxTimer().start(0.2, (tmr:FlxTimer) ->
+		{
+			FlxG.switchState(new HelpState());
+		});
 	}
 
 	function quitShit()
@@ -237,6 +349,7 @@ class MainMenuState extends FlxState
 		// !!IMPORTANT: GET A MENU BEFORE CLOSING!! \\
 		lime.system.System.exit(0);
 	}
+
 	// thanks Angel
 	var draggingMenu:Bool = false;
 	var creatingMenu:Bool = false;
@@ -244,6 +357,7 @@ class MainMenuState extends FlxState
 	var menuPrevY:Float;
 	var cursorPrevX:Int;
 	var cursorPrevY:Int;
+
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
@@ -254,20 +368,22 @@ class MainMenuState extends FlxState
 			DiscordRpc.shutdown();
 		}
 		// thanks Angel
-		if (FlxG.mouse.justPressed) {
+		if (FlxG.mouse.justPressed)
+		{
 			if (optionsOpen && !creatingMenu)
 			{
 				// optionsBG < click
 				// optionsMenu < move
-	
+
 				var inButtonArea:Bool = false;
 				var x1, x2, y1, y2;
 				x1 = optionsOk.getScreenPosition().x;
 				x2 = optionsOk.getScreenPosition().x + optionsOk.width;
 				y1 = optionsOk.getScreenPosition().y;
 				y2 = optionsOk.getScreenPosition().y + optionsOk.height;
-				if (FlxG.mouse.screenX >= x1 && FlxG.mouse.screenX <= x2 && FlxG.mouse.screenY >= y1 && FlxG.mouse.screenY <= y2) inButtonArea = true;
-	
+				if (FlxG.mouse.screenX >= x1 && FlxG.mouse.screenX <= x2 && FlxG.mouse.screenY >= y1 && FlxG.mouse.screenY <= y2)
+					inButtonArea = true;
+
 				if (!inButtonArea)
 				{
 					x1 = optionsBG.getScreenPosition().x;
@@ -313,21 +429,22 @@ class MainMenuState extends FlxState
 		#if debug
 		if (FlxG.keys.justReleased.D)
 		{
-			remove(tree);
-			remove(selectMenu);
 			remove(backdrop);
 			remove(background);
 			remove(sky);
+			remove(tree);
+			remove(selectMenu);
 		}
 		if (FlxG.keys.justReleased.A)
 		{
-			add(tree);
-			add(selectMenu);
 			add(backdrop);
 			add(background);
 			add(sky);
+			add(tree);
+			add(selectMenu);
 		}
-		DebugUtils.debug(optionsOk);
+		DebugUtils.debug(nameTitle);
+		DebugUtils.debug(nameSubTitle);
 		if (FlxG.keys.justReleased.R) // refresh lol
 		{
 			FlxG.switchState(new LoadingState());

@@ -1,17 +1,10 @@
 package;
 
-import AngelUtils; // for masking and reading json lol
-import DataShit; // getting data
+import flixel.addons.ui.FlxUIInputText;
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.ui.FlxButton;
 import flixel.text.FlxText;
-import flixel.util.FlxColor;
-import lime.app.Application;
-import flixel.addons.ui.FlxInputText;
-import flixel.addons.ui.FlxUI;
-import flixel.addons.ui.FlxUIInputText;
 import DebugUtils;
 
 using flixel.util.FlxSpriteUtil;

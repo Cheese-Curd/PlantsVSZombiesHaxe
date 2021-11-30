@@ -21,8 +21,8 @@ class DebugUtils
 			thing.x--;
 		}
 		if (FlxG.keys.justReleased.ENTER) {
-			trace('X: ' + thing.x);
-			trace('Y: ' + thing.y);
+			trace('[DEBUG] X: ' + thing.x);
+			trace('[DEBUG] Y: ' + thing.y);
 		}
 	}
 }
