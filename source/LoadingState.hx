@@ -144,6 +144,7 @@ class LoadingState extends FlxState
 			new FlxTimer().start(10, function(tmr:FlxTimer)
 			{
 				remove(loadingtxt);
+				remove(grass_ball);
 				add(continueBttn);
 				DiscordRpc.presence({
 					details: 'Version: [PRIVATE BETA 2]',

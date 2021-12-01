@@ -28,13 +28,16 @@ class PlayState extends FlxState
 
 	override public function onFocus()
 	{
-		return;
+		super.onFocus();
+		FlxG.sound.music.resume();
+		trace("[SYSTEM] User Focused the window");
 	}
 
 	override public function onFocusLost()
 	{
-		return;
-		// add(lostfocuspause);
+		super.onFocusLost();
+		FlxG.sound.music.pause();
+		trace("[SYSTEM] User Lost Focus the window");
 	}
 
 	// Character shit \\
@@ -65,11 +68,11 @@ class PlayState extends FlxState
 		// Level shit \\
 		if (_gamedata.data.world == 1)
 		{
+			levelType = 'grass';
 			if (_gamedata.data.level == 1 || _gamedata.data.level == 2 || _gamedata.data.level == 3)
 			{
 				levelType = 'grass_dirt';
 			}
-			levelType = 'grass';
 		}
 		else if (_gamedata.data.world == 2)
 		{

@@ -86,11 +86,6 @@ class HelpState extends FlxState
 		super.update(elapsed);
 
 		DebugUtils.debug(text);
-
-		if (FlxG.keys.justReleased.R) // refresh lol
-		{
-			FlxG.switchState(new MainMenuState());
-		}
 	}
 
 	// I just stole the fuckin' code from the github lol \\

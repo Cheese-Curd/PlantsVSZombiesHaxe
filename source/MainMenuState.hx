@@ -160,7 +160,7 @@ class MainMenuState extends FlxState
 
 			nameInput = new FlxUIInputText(350, 289, 100, '');
 			nameInput.setFormat('assets/fonts/DWARVESC.ttf', 18, 0xFFF5C8, CENTER);
-			nameInput.maxLength = 13; // one extra just to have the ability to have the '!', will remove the last character if it's 13 though
+			nameInput.maxLength = 12;
 
 			nameSubmit = new FlxButton(288, 320, 'Ok', submitName);
 
@@ -176,6 +176,7 @@ class MainMenuState extends FlxState
 	function submitName()
 	{
 		name = nameInput.text;
+		nameInput.maxLength = 13;
 		woodUsrName.text = name + '!';
 		trace('Set name to ' + name);
 		remove(nameTitle);
@@ -256,7 +257,7 @@ class MainMenuState extends FlxState
 	function openAdventure()
 	{
 		FlxG.sound.play('assets/sounds/gravebutton.ogg'); // button sound
-
+		fuckYouStop();
 		if (_gamedata.data.newgame == true)
 		{
 			trace("[SYSTEM] New Adventure");
@@ -294,6 +295,15 @@ class MainMenuState extends FlxState
 		}
 	}
 
+	function fuckYouStop()
+	{
+		minigame.active = false;
+		adventure.active = false;
+		quit.active = false;
+		help.active = false;
+		options.active = false;
+	}
+
 	function optionsShit()
 	{
 		FlxG.sound.play('assets/sounds/tap.ogg'); // button sound
@@ -303,11 +313,7 @@ class MainMenuState extends FlxState
 		{
 			creatingMenu = true;
 			optionsOpen = true;
-			minigame.active = false;
-			adventure.active = false;
-			quit.active = false;
-			help.active = false;
-			options.active = false;
+			fuckYouStop();
 			optionsMenu.add(optionsBG);
 			optionsMenu.add(optionsOk);
 			add(optionsMenu);
@@ -448,9 +454,9 @@ class MainMenuState extends FlxState
 		}
 		DebugUtils.debug(nameTitle);
 		DebugUtils.debug(nameSubTitle);
-		if (FlxG.keys.justReleased.R) // refresh lol
+		if (FlxG.keys.pressed.R && FlxG.keys.pressed.CONTROL) // refresh lol
 		{
-			FlxG.switchState(new LoadingState());
+			FlxG.resetGame();
 		}
 		#end
 	}
