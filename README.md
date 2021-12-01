@@ -57,8 +57,7 @@ MacOS
 No idea I will search more later, if I find anything I will update this with the command
 ```
 But, if you want to compile for Windows, it's a lot different story.\
-You need Visual ~~Stupid~~ Studio, not Visual Studio Code, [Visual Studio](https://visualstudio.microsoft.com/downloads/)\
-###### I swear to god if it doesn't strikethrough that I will die
+You need Visual ~~Stupid~~ Studio, not Visual Studio Code, [Visual Studio](https://visualstudio.microsoft.com/downloads/)
 
 When installing don't click on any of the options to install workloads. Instead, go to the individual components tab and choose the following:
 * MSVC v142 - VS 2019 C++ x64/x86 build tools
