@@ -53,8 +53,8 @@ Linux
 lime test linux -debug
 ```
 MacOS
-```
-find out yourself lol, I have no idea
+```Bash
+lime test mac -debug
 ```
 But, if you want to compile for Windows, it's a lot different story.\
 You need Visual ~~Stupid~~ Studio, not Visual Studio Code, [Visual Studio](https://visualstudio.microsoft.com/downloads/)
