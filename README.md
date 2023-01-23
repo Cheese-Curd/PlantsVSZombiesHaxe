@@ -81,7 +81,7 @@ then again if you use VSCode just press your debug button (default `F5`)
 [Laura Shigihara](https://www.laurashigihara.com/) - *Music Artist*\
 [George Fan](https://twitter.com/thegeorgefan) - *Creator*
 
-### <p align="center">Plants VS Zombies Haxe Edition Team:<p align="center"/p>
+### <p align="center">Plants VS Zombies Haxe Edition Team:</p>
 Cheese Curd - *Lead Developer*\
 [Angel Bot](https://github.com/AngelDTF) - *Extra Utilities + Some QoL Features*
 ###### *haha it's all me! Except for Angel-*
