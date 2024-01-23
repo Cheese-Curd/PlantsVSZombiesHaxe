@@ -19,9 +19,11 @@ class PlayState extends FlxState
 	var zombie:Zombie;
 	var levelType = 'grass';
 	var background:FlxSprite;
+	var backgroundGrass:FlxSprite; // reference for size and stuff
 	var grid:FlxGridOverlay;
 	var _gamedata:FlxSave;
 	var menuButton:FlxButton;
+	var plantGrid:FlxSprite;
 
 	// ==========Pause shit========== \\
 	var lostfocuspause:FlxSprite;
@@ -55,9 +57,14 @@ class PlayState extends FlxState
 
 		plant = new FlxSprite();
 		background = new FlxSprite(-220, 0);
+		backgroundGrass = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
 		getLevel();
 		add(background);
+		add(backgroundGrass);
+		plantGrid = FlxGridOverlay.create(9, 5, backgroundGrass.width, backgroundGrass.height);
+		add(plantGrid);
+
 		menuButton = new FlxButton(681, -12, '', pauseBitch);
 		menuButton.loadGraphic('assets/images/menu/inGamePause.png', true, 117, 48);
 		add(menuButton);
@@ -112,7 +119,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday/grassday_dirt.jpg');
+				background.loadGraphic('assets/images/levels/grassday/grassday_dirt.png');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'grass':
 				DiscordRpc.presence({
@@ -121,7 +128,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday/grassday.jpg');
+				background.loadGraphic('assets/images/levels/grassday/grassday.png');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'night':
 				DiscordRpc.presence({
