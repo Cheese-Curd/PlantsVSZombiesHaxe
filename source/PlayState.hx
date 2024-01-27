@@ -10,11 +10,12 @@ import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.ui.FlxButton;
 import DebugUtils; // Funny debug
+import Plant;
 
 class PlayState extends FlxState
 {
-	var planttype = DataShit.plantType[0];
-	var plant:FlxSprite;
+	//var planttype = DataShit.plantType[0];
+	var plant:Plant;
 	var zombietype = DataShit.zombieType[0];
 	var zombie:Zombie;
 	var levelType = 'grass';
@@ -23,7 +24,6 @@ class PlayState extends FlxState
 	var grid:FlxGridOverlay;
 	var _gamedata:FlxSave;
 	var menuButton:FlxButton;
-	var plantGrid:FlxSprite;
 
 	// ==========Pause shit========== \\
 	var lostfocuspause:FlxSprite;
@@ -55,15 +55,17 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		plant = new FlxSprite();
+
 		background = new FlxSprite(-220, 0);
 		backgroundGrass = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
 		getLevel();
 		add(background);
 		add(backgroundGrass);
-		plantGrid = FlxGridOverlay.create(9, 5, backgroundGrass.width, backgroundGrass.height);
-		add(plantGrid);
+
+		plant = new Plant(0,0,"peashooter",false);
+		plant.screenCenter();
+		add(plant);
 
 		menuButton = new FlxButton(681, -12, '', pauseBitch);
 		menuButton.loadGraphic('assets/images/menu/inGamePause.png', true, 117, 48);
