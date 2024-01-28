@@ -30,13 +30,11 @@ class Plant extends FlxSprite{
     public var isAsleep:Bool = false;
 	public var curPlant:String = 'peashooter';
     public var isShooting:Bool = false;
-    public var isStatic:Bool = false;
 
-    public function new(x:Float, y:Float, ?plantName:String = "peashooter", ?asleep:Bool = false, ?staticAnim:Bool = false){
+    public function new(x:Float, y:Float, ?plantName:String = "peashooter", ?asleep:Bool = false){
         super(x,y);
         curPlant = plantName;
         isAsleep = asleep;
-        isStatic = staticAnim;
         var tex:FlxAtlasFrames;
         switch(curPlant)
         {
@@ -47,8 +45,7 @@ class Plant extends FlxSprite{
 				addAnim('idle', 'peashooter idle');
                 addAnim('shoot', 'peashooter shoot');
 
-                if (!isStatic)
-                    playAnim("idle");
+                playAnim("idle");
 
             default:
                // default real
@@ -56,15 +53,14 @@ class Plant extends FlxSprite{
                 frames = tex;
                 addAnim('idle', 'peashooter idle');
                 addAnim('shoot', 'peashooter shoot');
-                
-                if (!isStatic)
-                    playAnim("idle");
+
+                playAnim("idle");
         }
         exist();
     }
 
     public function exist(){
-        if (!isShooting && animation.curAnim.finished && !isStatic){
+        if (!isShooting && animation.curAnim.finished){
             playAnim("idle");
         }
 
