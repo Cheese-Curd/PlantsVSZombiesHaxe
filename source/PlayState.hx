@@ -69,7 +69,7 @@ class PlayState extends FlxState
 		plant.screenCenter();
 		add(plant);
 
-		seedPack = new SeedPacket("peashooter");
+		seedPack = new SeedPacket(0,0,"peashooter");
 		seedPack.screenCenter();
 		add(seedPack);
 
