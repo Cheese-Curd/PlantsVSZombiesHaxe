@@ -85,7 +85,7 @@ then again if you use VSCode just press your debug button (default `F5`)
 Cheese Curd - *Lead Developer*\
 [Angel Bot](https://github.com/AngelDTF) - *Extra Utilities + Some QoL Features*
 
-### <p align="center">Plants VS Zombies Haxe Engine Tean:</p>
+### <p align="center">Plants VS Zombies Haxe Engine Team:</p>
 Electr0Gunner - *Lead Developer*\
 504Brandon - Possible Future used H-Script System (idk yet)
 
