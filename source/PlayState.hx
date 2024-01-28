@@ -11,6 +11,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.ui.FlxButton;
 import DebugUtils; // Funny debug
 import Plant;
+import SeedPacket;
 
 class PlayState extends FlxState
 {
@@ -21,6 +22,7 @@ class PlayState extends FlxState
 	var levelType = 'grass';
 	var background:FlxSprite;
 	var backgroundGrass:FlxSprite; // reference for size and stuff
+	var seedPack:SeedPacket;
 	var grid:FlxGridOverlay;
 	var _gamedata:FlxSave;
 	var menuButton:FlxButton;
@@ -66,6 +68,10 @@ class PlayState extends FlxState
 		plant = new Plant(0,0,"peashooter",false);
 		plant.screenCenter();
 		add(plant);
+
+		seedPack = new SeedPacket("peashooter");
+		seedPack.screenCenter();
+		add(seedPack);
 
 		menuButton = new FlxButton(681, -12, '', pauseBitch);
 		menuButton.loadGraphic('assets/images/menu/inGamePause.png', true, 117, 48);
