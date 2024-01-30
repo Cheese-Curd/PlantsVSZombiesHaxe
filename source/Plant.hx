@@ -52,7 +52,7 @@ class Plant extends FlxSprite{
                 playAnim("idle");
 
             default:
-                jsonSystem = Json.parse(Assets.getText(Paths.json(curPlant, 'data/plants/$curPlant')));
+                jsonSystem = Json.parse(Assets.getText(Paths.json(curPlant, 'data/plants')));
 
                 tex = Paths.getSparrowAtlas('images/plants/$curPlant/${jsonSystem.textureName}');
                 frames = tex;
