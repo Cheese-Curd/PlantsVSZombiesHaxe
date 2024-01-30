@@ -12,7 +12,7 @@ class DataShit
 	 */
 	public static var zombieType = [
 		'basic', 'conehead', 'buckethead', 'pogo', 'gargantuar', 'ladder', 'digger', 'screendoor', 'football', 'polevault', 'newspaper', 'zombony', 'flag',
-		'fucking_zomboss_lol'
+		'zomboss'
 	];
 	public static var plantType = [
 		'peashooter', 'sunflower', 'repeater', 'potato_mine', 'icepea', 'wallnut', 'tallnut', 'hypnoshroom', 'threepeater', 'puffshroom', 'cattail',

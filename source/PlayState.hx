@@ -10,15 +10,19 @@ import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.ui.FlxButton;
 import DebugUtils; // Funny debug
+import Plant;
+import SeedPacket;
 
 class PlayState extends FlxState
 {
-	var planttype = DataShit.plantType[0];
-	var plant:FlxSprite;
+	//var planttype = DataShit.plantType[0];
+	var plant:Plant;
 	var zombietype = DataShit.zombieType[0];
 	var zombie:Zombie;
 	var levelType = 'grass';
 	var background:FlxSprite;
+	var backgroundGrass:FlxSprite; // reference for size and stuff
+	var seedPack:SeedPacket;
 	var grid:FlxGridOverlay;
 	var _gamedata:FlxSave;
 	var menuButton:FlxButton;
@@ -53,11 +57,22 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-		plant = new FlxSprite();
+
 		background = new FlxSprite(-220, 0);
+		backgroundGrass = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
 		getLevel();
 		add(background);
+		add(backgroundGrass);
+
+		plant = new Plant(0,0,"peashooter",false);
+		plant.screenCenter();
+		add(plant);
+
+		seedPack = new SeedPacket(0,0,"peashooter");
+		seedPack.screenCenter();
+		add(seedPack);
+
 		menuButton = new FlxButton(681, -12, '', pauseBitch);
 		menuButton.loadGraphic('assets/images/menu/inGamePause.png', true, 117, 48);
 		add(menuButton);
@@ -112,7 +127,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday/grassday_dirt.jpg');
+				background.loadGraphic('assets/images/levels/grassday/grassday_dirt.png');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'grass':
 				DiscordRpc.presence({
@@ -121,7 +136,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday/grassday.jpg');
+				background.loadGraphic('assets/images/levels/grassday/grassday.png');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'night':
 				DiscordRpc.presence({

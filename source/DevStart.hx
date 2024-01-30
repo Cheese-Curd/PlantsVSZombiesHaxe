@@ -19,7 +19,7 @@ class DevStart extends FlxState
 	var logintext:FlxText;
 	var loginbutton:FlxButton;
 	var loginbox:FlxUIInputText; // no fucking idea if this is the actuall thing for a text box, probably not, but can't check ;)
-	var defaultlogintext = 'PRIVATE DEV BUILD 2 LOGIN';
+	var defaultlogintext = 'login';
 	var password = 'hehedev';
 	
 	override public function create()

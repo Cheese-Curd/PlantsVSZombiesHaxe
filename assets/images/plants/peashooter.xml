@@ -1,50 +1,55 @@
-<?xml version='1.0' encoding='utf-8'?>
-<TextureAtlas imagePath="peashooter.png"><SubTexture name="peashooter idle0000" x="0" y="0" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0001" x="254" y="0" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0002" x="508" y="0" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0003" x="762" y="0" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0004" x="0" y="254" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0005" x="254" y="254" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0006" x="508" y="254" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0007" x="762" y="254" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0008" x="0" y="508" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0009" x="254" y="508" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0010" x="508" y="508" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0011" x="762" y="508" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0012" x="0" y="762" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0013" x="254" y="762" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0014" x="508" y="762" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0015" x="762" y="762" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0016" x="0" y="1016" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0017" x="254" y="1016" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0018" x="508" y="1016" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0019" x="762" y="1016" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0020" x="0" y="1270" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0021" x="254" y="1270" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0022" x="508" y="1270" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0023" x="762" y="1270" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0024" x="0" y="1524" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0025" x="254" y="1524" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0026" x="508" y="1524" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0027" x="762" y="1524" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0028" x="0" y="1778" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0029" x="254" y="1778" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0030" x="508" y="1778" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0031" x="762" y="1778" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0032" x="0" y="2032" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0033" x="254" y="2032" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0034" x="508" y="2032" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0035" x="762" y="2032" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0036" x="0" y="2286" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0037" x="254" y="2286" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0038" x="508" y="2286" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0039" x="762" y="2286" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0040" x="0" y="2540" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0041" x="254" y="2540" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0042" x="508" y="2540" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0043" x="762" y="2540" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0044" x="0" y="2794" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0045" x="254" y="2794" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0046" x="508" y="2794" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
-<SubTexture name="peashooter idle0047" x="762" y="2794" width="254" height="254" frameX="0" frameY="0" frameWidth="254" frameHeight="254" />
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="peashooter.png">
+	<!-- Created with Adobe Animate version 23.0.1.70 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="peashooter idle0000" x="0" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter idle0001" x="119" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter idle0002" x="238" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter idle0003" x="357" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter idle0004" x="476" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter idle0005" x="595" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter idle0006" x="714" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter idle0007" x="833" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter idle0008" x="0" y="118" width="73" height="72"/>
+	<SubTexture name="peashooter idle0009" x="119" y="118" width="73" height="72"/>
+	<SubTexture name="peashooter idle0010" x="238" y="118" width="73" height="72"/>
+	<SubTexture name="peashooter idle0011" x="357" y="118" width="73" height="72"/>
+	<SubTexture name="peashooter idle0012" x="476" y="118" width="73" height="72"/>
+	<SubTexture name="peashooter idle0013" x="595" y="118" width="73" height="72"/>
+	<SubTexture name="peashooter idle0014" x="714" y="118" width="73" height="72"/>
+	<SubTexture name="peashooter idle0015" x="833" y="118" width="73" height="72"/>
+	<SubTexture name="peashooter idle0016" x="0" y="236" width="73" height="72"/>
+	<SubTexture name="peashooter idle0017" x="119" y="236" width="73" height="72"/>
+	<SubTexture name="peashooter idle0018" x="238" y="236" width="73" height="72"/>
+	<SubTexture name="peashooter idle0019" x="357" y="236" width="73" height="72"/>
+	<SubTexture name="peashooter idle0020" x="476" y="236" width="73" height="72"/>
+	<SubTexture name="peashooter idle0021" x="595" y="236" width="73" height="72"/>
+	<SubTexture name="peashooter idle0022" x="714" y="236" width="73" height="72"/>
+	<SubTexture name="peashooter idle0023" x="833" y="236" width="73" height="72"/>
+	<SubTexture name="peashooter idle0024" x="0" y="0" width="73" height="72"/>
+	<SubTexture name="peashooter shoot0000" x="0" y="354" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0001" x="123" y="354" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0002" x="246" y="354" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0003" x="369" y="354" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0004" x="492" y="354" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0005" x="615" y="354" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0006" x="738" y="354" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0007" x="861" y="354" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0008" x="0" y="471" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0009" x="123" y="471" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0010" x="246" y="471" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0011" x="369" y="471" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0012" x="492" y="471" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0013" x="615" y="471" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0014" x="738" y="471" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0015" x="861" y="471" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0016" x="0" y="588" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0017" x="123" y="588" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0018" x="246" y="588" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0019" x="369" y="588" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0020" x="492" y="588" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0021" x="615" y="588" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0022" x="738" y="588" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0023" x="861" y="588" width="77" height="71"/>
+	<SubTexture name="peashooter shoot0024" x="0" y="354" width="77" height="71"/>
 </TextureAtlas>

@@ -1,11 +1,11 @@
 # <p align="center">Plants VS Zombies: Haxe Edition</p>
 
 PVZ: Haxe Edition is a port of PVZ (PC Version) in the coding language HaxeFlixel\
-Oh yeah if you make mods open-source them (as stated in the [Using Source Code](https://github.com/Cheese-Curd/PlantsVSZombiesHaxe#using-source-code) section) + this: [LICENSE](https://github.com/Cheese-Curd/PlantsVSZombiesHaxe/blob/main/LICENSE)
+Oh yeah if you make mods open-source them (as stated in the [Using Source Code](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine#using-source-code) section) + this: [LICENSE](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine/blob/main/LICENSE)
 
 ## <p align="center">Downloading</p>
 
-There are pre-compiled builds in the [releases](https://github.com/Cheese-Curd/PlantsVSZombiesHaxe/releases) tab. I will keep the old builds so you can experience the old builds lol\
+There are pre-compiled builds in the [releases](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine/releases) tab. I will keep the old builds so you can experience the old builds lol\
 ***at this time there are no published builds currently***
 
 ## <p align="center">Fun stuff</p>
@@ -19,7 +19,7 @@ Also if you make a mod of this by making a fork, **please keep them open-source.
 If [FNF](https://github.com/ninjamuffin99/Funkin) can do it, so can I.
 
 ## <p align="center">Contributing</p>
-[Pull Requests](https://github.com/Cheese-Curd/PlantsVSZombiesHaxe/pulls) are welcome. For major changes, please open an [issues](https://github.com/Cheese-Curd/PlantsVSZombiesHaxe/issues) first to discuss what you would like to change.
+[Pull Requests](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine/pulls) are welcome. For major changes, please open an [issues](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine/issues) first to discuss what you would like to change.
 
 ## <p align="center">Using Source Code</p>
 All there is to know on compiling this game!
@@ -73,7 +73,7 @@ then again if you use VSCode just press your debug button (default `F5`)
 # <p align="center">Legal stuff + Credits</p>
 **All image/sounds/music assets are *NOT* mine, they belong to their respected author.**
 
-[**More Info**](https://github.com/Cheese-Curd/PlantsVSZombiesHaxe/blob/main/assets/SpecialThanks.txt)
+[**More Info**](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine/blob/main/assets/SpecialThanks.txt)
 ### <p align="center">Plants VS Zombies Team:<lp>
 
 [PopCap Games](https://www.ea.com/ea-studios/popcap) - *Developer*\
@@ -84,4 +84,8 @@ then again if you use VSCode just press your debug button (default `F5`)
 ### <p align="center">Plants VS Zombies Haxe Edition Team:</p>
 Cheese Curd - *Lead Developer*\
 [Angel Bot](https://github.com/AngelDTF) - *Extra Utilities + Some QoL Features*
-###### *haha it's all me! Except for Angel-*
+
+### <p align="center">Plants VS Zombies Haxe Engine Team:</p>
+Electr0Gunner - *Lead Developer*\
+504Brandon - Possible Future used H-Script System (idk yet)
+
