@@ -10,6 +10,7 @@
           "y": 0,
           "postfix": "peashooter shoot",
           "prefix": "shoot",
+          "fps":12,
           "looped": false
         },
         {

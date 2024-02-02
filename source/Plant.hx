@@ -20,6 +20,7 @@ typedef PlantJson=
 {
     var textureName:String;
     var health:Float;
+    var price:Float;
     var isSpecial:Bool;
     var anims:Array<AnimLoader>;
     var flipX:Bool;
@@ -54,7 +55,7 @@ class Plant extends FlxSprite{
             default:
                 jsonSystem = Json.parse(Assets.getText(Paths.json(curPlant, 'data/plants/$curPlant')));
 
-                tex = Paths.getSparrowAtlas('images/plants/$curPlant/${jsonSystem.textureName}');
+                tex = Paths.getSparrowAtlas('plants/${jsonSystem.textureName}');
                 frames = tex;
 
                 for (anim in jsonSystem.anims){
@@ -70,9 +71,9 @@ class Plant extends FlxSprite{
 
                 flipX = jsonSystem.flipX;
 				flipY = jsonSystem.flipY;
-                
+
+                playAnim("idle");
         }
-        exist();
     }
 
     public function addOffset(name:String, x:Float = 0, y:Float = 0)
@@ -80,25 +81,9 @@ class Plant extends FlxSprite{
             animOffsets[name] = [x, y];
         }
 
-    public function exist(){
-        if (!isShooting && animation.curAnim.finished){
-            playAnim("idle");
-        }
-
-        if (isShooting){
-            switch(curPlant)
-            {
-                case "peashooter":
-                    if (animation.curAnim.name == 'idle' || animation.curAnim.name == 'shoot'  && animation.curAnim.finished){
-                        playAnim("shoot");
-                    }
-            }
-        }
-    }
-
     override function update(elapsed:Float){
-        if (animation.curAnim.finished)
-            exist();
+        //if (animation.curAnim.finished)
+            //exist();
 
         super.update(elapsed);
     }

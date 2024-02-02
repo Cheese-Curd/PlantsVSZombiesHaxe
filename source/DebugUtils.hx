@@ -20,9 +20,9 @@ class DebugUtils
 		if (FlxG.keys.justReleased.LEFT) {
 			thing.x--;
 		}
-		if (FlxG.keys.justReleased.ENTER) {
-			trace('[DEBUG] X: ' + thing.x);
-			trace('[DEBUG] Y: ' + thing.y);
-		}
+		//if (FlxG.keys.justReleased.ENTER) {
+			//trace('[DEBUG] X: ' + thing.x);
+			//trace('[DEBUG] Y: ' + thing.y);
+		//}
 	}
 }

@@ -69,8 +69,9 @@ class PlayState extends FlxState
 		plant.screenCenter();
 		add(plant);
 
-		seedPack = new SeedPacket(0,0,"peashooter");
+		seedPack = new SeedPacket(0,0,"peashooter", 100);
 		seedPack.screenCenter();
+		seedPack.x += 150;
 		add(seedPack);
 
 		menuButton = new FlxButton(681, -12, '', pauseBitch);
