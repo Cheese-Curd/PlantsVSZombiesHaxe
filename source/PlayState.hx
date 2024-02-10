@@ -11,6 +11,7 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.ui.FlxButton;
 import DebugUtils; // Funny debug
 import Plant;
+import Lawn;
 import SeedPacket;
 
 class PlayState extends FlxState
@@ -19,7 +20,7 @@ class PlayState extends FlxState
 	var plant:Plant;
 	var zombie:Zombie;
 	var levelType = 'grass';
-	var background:FlxSprite;
+	var background:Lawn;
 	var backgroundGrass:FlxSprite; // reference for size and stuff
 	var seedPack:SeedPacket;
 	var grid:FlxSprite;
@@ -57,7 +58,7 @@ class PlayState extends FlxState
 		super.create();
 
 
-		background = new FlxSprite(-220, 0);
+		background = new Lawn(-220, 0, "grass",5,5);
 		backgroundGrass = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
 
@@ -117,7 +118,7 @@ class PlayState extends FlxState
 	function pauseBitch() {
 		
 	}
-
+	
 	function getLevel()
 	{
 		trace('level Type is ' + levelType);
@@ -130,7 +131,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday/grassday_dirt.png');
+				background.reloadImage('assets/images/levels/grassday/grassday_dirt.png');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'grass':
 				DiscordRpc.presence({
@@ -139,7 +140,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday/grassday.png');
+				background.reloadImage('assets/images/levels/grassday/grassday.png');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'night':
 				DiscordRpc.presence({
@@ -148,7 +149,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassnight/grassnight.jpg');
+				background.reloadImage('assets/images/levels/grassnight/grassnight.jpg');
 				FlxG.sound.playMusic('assets/music/moongrains.ogg');
 			case 'pool':
 				DiscordRpc.presence({
@@ -157,7 +158,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/poolday/poolday.jpg');
+				background.reloadImage('assets/images/levels/poolday/poolday.jpg');
 				if (_gamedata.data.fastpool == true)
 				{
 					FlxG.sound.playMusic('assets/music/watery_graves_fast.ogg'); // faster
@@ -173,7 +174,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/poolnight/poolnight.jpg');
+				background.reloadImage('assets/images/levels/poolnight/poolnight.jpg');
 				FlxG.sound.playMusic('assets/music/rigor_moris.ogg'); // play fog music and stuff
 			case 'roof':
 				DiscordRpc.presence({
@@ -184,7 +185,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/roofday/roofday.jpg');
+				background.reloadImage('assets/images/levels/roofday/roofday.jpg');
 				FlxG.sound.playMusic('assets/music/graze_the_roof.ogg');
 			case 'roof_night':
 				DiscordRpc.presence({
@@ -195,7 +196,7 @@ class PlayState extends FlxState
 					smallImageText: 'holy shit they are about to beat the game, partly',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/roofnight/roofnight.jpg');
+				background.reloadImage('assets/images/levels/roofnight/roofnight.jpg');
 				FlxG.sound.playMusic('assets/music/brainiac_maniac.ogg');
 		}
 	}
