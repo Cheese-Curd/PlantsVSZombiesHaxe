@@ -2,10 +2,10 @@ package;
 
 import flixel.util.FlxSave;
 import AngelUtils; // for json reading
-import DataShit; // getting data
 import discord_rpc.DiscordRpc;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxColor;
 import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.ui.FlxButton;
@@ -17,13 +17,12 @@ class PlayState extends FlxState
 {
 	//var planttype = DataShit.plantType[0];
 	var plant:Plant;
-	var zombietype = DataShit.zombieType[0];
 	var zombie:Zombie;
 	var levelType = 'grass';
 	var background:FlxSprite;
 	var backgroundGrass:FlxSprite; // reference for size and stuff
 	var seedPack:SeedPacket;
-	var grid:FlxGridOverlay;
+	var grid:FlxSprite;
 	var _gamedata:FlxSave;
 	var menuButton:FlxButton;
 
@@ -61,13 +60,16 @@ class PlayState extends FlxState
 		background = new FlxSprite(-220, 0);
 		backgroundGrass = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
+
 		getLevel();
 		add(background);
 		add(backgroundGrass);
 
-		plant = new Plant(0,0,"peashooter",false);
-		plant.screenCenter();
+		plant = new Plant(100,100,"peashooter",false);
 		add(plant);
+
+		zombie = new Zombie(200,100,"basic",true);
+		add(zombie);
 
 		seedPack = new SeedPacket(0,0,"peashooter", 100);
 		seedPack.screenCenter();
@@ -196,20 +198,6 @@ class PlayState extends FlxState
 				background.loadGraphic('assets/images/levels/roofnight/roofnight.jpg');
 				FlxG.sound.playMusic('assets/music/brainiac_maniac.ogg');
 		}
-	}
-
-	function getZombie()
-	{
-		switch (zombietype)
-		{
-			case 'basic':
-			// zombie = AngelUtils.JsonifyFile('assets/data/zombies/basic.json');
-			case 'cone':
-
-			case 'bucket':
-
-			case 'screendoor':
-		};
 	}
 
 	override public function update(elapsed:Float)

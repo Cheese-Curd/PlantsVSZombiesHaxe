@@ -19,7 +19,8 @@ class LoadingState extends FlxState
 	var loadingtxt:FlxText;
 	var popcap_logo:FlxSprite;
 	var popcap:FlxText;
-	var cheese:FlxText;
+	var eliana:FlxText;
+	var eGunner:FlxText;
 	var haxe_edition:FlxText;
 	// PvZ Logo \\
 	var pvz_logo:FlxSprite;
@@ -51,19 +52,26 @@ class LoadingState extends FlxState
 		FlxAssets.FONT_DEFAULT = 'assets/fonts/Brianne_s_hand.ttf';
 		popcap = new FlxText(260, 38, 339, 'Plants VS Zombies made by:', 24);
 		popcap.alpha = 0;
-		cheese = new FlxText(237, 377, 433, 'Haxe Edition made by: Cheese Curd', 24);
-		cheese.alpha = 0;
+
+		// Haxe Edition Creator
+		eliana = new FlxText(237, 377, 433, 'Haxe Edition made by: Eliana', 24);
+		eliana.alpha = 0;
+		// Haxe Engine Creator (Thanks for continuing this :D)
+		eGunner = new FlxText(237, 425, 433, 'Haxe Engine made by: Electr0Gunner', 24);
+		eGunner.alpha = 0;
 
 		popcap_logo = new FlxSprite(250, 65).loadGraphic('assets/images/menu/loading/PopCap_Logo.jpg');
 		popcap_logo.alpha = 0;
 
 		add(popcap);
-		add(cheese);
+		add(eliana);
+		add(eGunner);
 		add(popcap_logo);
 		// Antialiasing \\
 		popcap_logo.antialiasing = true;
 		popcap.antialiasing = true;
-		cheese.antialiasing = true;
+		eliana.antialiasing = true;
+		eGunner.antialiasing = true;
 		fadeAnimation();
 	}
 
@@ -71,11 +79,14 @@ class LoadingState extends FlxState
 	{
 		FlxTween.tween(popcap_logo, {alpha: 1}, 2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(popcap, {alpha: 1}, 2, {ease: FlxEase.expoInOut});
+
 		new FlxTimer().start(0.8, function(tmr:FlxTimer)
 		{
-			FlxTween.tween(cheese, {alpha: 1}, 2, {ease: FlxEase.expoInOut});
+			FlxTween.tween(eliana, {alpha: 1}, 2, {ease: FlxEase.expoInOut});
+			FlxTween.tween(eGunner, {alpha: 1}, 2.3, {ease: FlxEase.expoInOut});
 		});
-		new FlxTimer().start(2.0, function(tmr:FlxTimer)
+
+		new FlxTimer().start(4, function(tmr:FlxTimer)
 		{
 			textPlay();
 		});
@@ -83,7 +94,7 @@ class LoadingState extends FlxState
 
 	function textPlay()
 	{
-		new FlxTimer().start(3.0, function(tmr:FlxTimer)
+		new FlxTimer().start(4.0, function(tmr:FlxTimer)
 		{
 			trace('Should have switched to main loading');
 			mainLoading();
@@ -94,13 +105,16 @@ class LoadingState extends FlxState
 	{
 		FlxTween.tween(popcap_logo, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(popcap, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
-		FlxTween.tween(cheese, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
+		FlxTween.tween(eliana, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
+		new FlxTimer().start(0.3, function(tmr:FlxTimer) { FlxTween.tween(eGunner, {alpha: 0}, 1.7, {ease: FlxEase.expoInOut}); });
+
 		new FlxTimer().start(2, function(tmr)
 		{
 			// remove everything not needed \\
 			remove(popcap);
 			remove(popcap_logo);
-			remove(cheese);
+			remove(eliana);
+			remove(eGunner);
 			// Loading Text Properties \\
 			loadingtxt = new FlxText(347, 544, 0, "Loading...", 24);
 			// Contiue Button Properties \\

@@ -1,7 +1,7 @@
 {
     "textureName": "zombie",
     "health": 270,
-    "speed": 100,
+    "speed": 50,
     "flipX": false,
     "flipY": false,
     "anims": [
@@ -10,7 +10,7 @@
           "y": 0,
           "postfix": "idle zombie1",
           "prefix": "idle",
-          "fps":12,
+          "fps":24,
           "looped": false
         },
         {
@@ -18,7 +18,7 @@
           "y": 0,
           "postfix": "idle zombie2",
           "prefix": "idle-alt",
-          "fps":12,
+          "fps":24,
           "looped": false
         },
         {
@@ -26,16 +26,16 @@
             "y": 0,
             "postfix": "walk zombie1",
             "prefix": "walk",
-            "fps":12,
+            "fps":24,
             "looped": false
-          },
-          {
+        },
+        {
             "x": 0,
             "y": 0,
             "postfix": "walk zombie2",
             "prefix": "walk-alt",
-            "fps":12,
+            "fps":24,
             "looped": false
-          }
+        }
     ]
 }

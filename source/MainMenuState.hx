@@ -5,7 +5,6 @@ import flixel.addons.ui.FlxUIInputText;
 import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import AngelUtils; // for masking and reading json lol
-import DataShit; // getting data
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -59,10 +58,12 @@ class MainMenuState extends FlxState
 	var woodUsrSwitch:FlxButton;
 	var woodUsrName:FlxText;
 	var woodBroken:FlxSprite;
-	var name:String = 'No Name'; // will change I swear
+	// var name:String = 'No Name'; // will change I swear
 
 	override public function create()
 	{
+		super.create();
+	
 		FlxG.sound.music.pause(); // for when transitioning back from help
 		if (FlxG.sound.music.playing)
 		{
@@ -73,6 +74,10 @@ class MainMenuState extends FlxState
 			FlxG.sound.music.play();
 		}
 
+		// Initializing Game Save
+		_gamedata = new FlxSave();
+		_gamedata.bind("Save");
+
 		// wood buttons \\
 
 		woodName = new FlxSprite(22, -8).loadGraphic('assets/images/menu/mainmenu/SelectorScreen_WoodSign1.png');
@@ -80,11 +85,12 @@ class MainMenuState extends FlxState
 		woodUsrSwitch.loadGraphic('assets/images/menu/mainmenu/ScreenSelector_WoodSign_Button.png', true, 291, 71);
 		woodUsrName = new FlxText(147, 86);
 		woodUsrName.setFormat('assets/fonts/Brianne_s_hand.ttf', 18, 0xFFF5C8, CENTER); // WHY IS THE E DIFFERENTTTTTTTTTTTTTTTTTT
-		woodUsrName.text = name + '!';
+		woodUsrName.text = "Unknown!"; // We don't have a name yet
 		woodBroken = new FlxSprite(32, 179).loadGraphic('assets/images/menu/mainmenu/SelectorScreen_WoodSign3.png');
 
-		optionsMenu = new FlxSpriteGroup();
 		// Options Menu \\
+
+		optionsMenu = new FlxSpriteGroup();
 		optionsOk = new FlxButton(29, 380, "", closeOptions);
 		optionsOk.loadGraphic('assets/images/menu/mainmenu/options_backtogamebutton_full.png', true, 360, 100);
 		optionsBG = AngelUtils.fromAlphaMask('assets/images/menu/options_menuback.jpg', 'assets/images/menu/options_menuback_.png', 0, 0);
@@ -92,7 +98,8 @@ class MainMenuState extends FlxState
 		FlxG.sound.play('assets/sounds/roll_in.ogg');
 		background = new FlxSprite();
 		background.makeGraphic(800, 600, FlxColor.WHITE);
-		super.create();
+
+
 		DiscordRpc.start({
 			clientID: "884169727415566417",
 			onReady: onReady,
@@ -105,8 +112,10 @@ class MainMenuState extends FlxState
 			largeImageKey: 'discord_rpc_512',
 			largeImageText: 'Plants VS Zombies: Haxe Edition'
 		});
+
 		// Plays the Main Menu Theme (Dave Intro) \\
 		// FlxG.sound.playMusic('assets/music/main_menu_theme.ogg');
+
 		// Background Shit \\
 		sky = new FlxSprite().loadGraphic('assets/images/menu/mainmenu/SelectorScreen_BG.jpg');
 		add(background);
@@ -114,14 +123,18 @@ class MainMenuState extends FlxState
 
 		selectMenu = AngelUtils.fromAlphaMask('assets/images/menu/mainmenu/SelectorScreen_BG_Right.jpg',
 			'assets/images/menu/mainmenu/SelectorScreen_BG_Right_.png', 71, 41); // VSCode what the fuck is wrong with you
+
 		tree = AngelUtils.fromAlphaMask('assets/images/menu/mainmenu/SelectorScreen_BG_Left.jpg', 'assets/images/menu/mainmenu/SelectorScreen_BG_Left_.png',
 			0, -80);
+
 		backdrop = AngelUtils.fromAlphaMask('assets/images/menu/mainmenu/SelectorScreen_BG_Center.jpg',
 			'assets/images/menu/mainmenu/SelectorScreen_BG_Center_.png', 103, 250);
+
 		add(sky);
 		add(backdrop);
 		sky.setGraphicSize(800, 600);
 		sky.updateHitbox();
+
 		add(tree);
 		add(selectMenu); // thank you Angel for helping me to get the masks to work, and for the Utils <3
 		backdrop.setGraphicSize(778, 350); // not exact, but close
@@ -147,7 +160,7 @@ class MainMenuState extends FlxState
 	{
 		trace('Animation not finished.');
 
-		if (name == 'No Name')
+		if (_gamedata.data.name == null)
 		{
 			nameTitle = new FlxText(337.5, 241);
 			nameTitle.setFormat('assets/fonts/DWARVESC.ttf', 24, 0xFFF5C8, CENTER);
@@ -161,6 +174,9 @@ class MainMenuState extends FlxState
 			nameInput = new FlxUIInputText(350, 289, 100, '');
 			nameInput.setFormat('assets/fonts/DWARVESC.ttf', 18, 0xFFF5C8, CENTER);
 			nameInput.maxLength = 12;
+			
+			// VScode likes to lie about this line, it does actually work.
+			nameInput.color = 0x000000; // Even though the UI isn't finished, make it so you can at least read it! (I was very lazy 3 years ago) - Eliana
 
 			nameSubmit = new FlxButton(288, 320, 'Ok', submitName);
 
@@ -175,14 +191,18 @@ class MainMenuState extends FlxState
 
 	function submitName()
 	{
-		name = nameInput.text;
+		_gamedata.data.name = nameInput.text;
 		nameInput.maxLength = 13;
-		woodUsrName.text = name + '!';
-		trace('Set name to ' + name);
+		woodUsrName.text = _gamedata.data.name + '!';
+		trace('Set name to ' + _gamedata.data.name);
+
+		// Remove the UI
 		remove(nameTitle);
 		remove(nameSubTitle);
 		remove(nameInput);
 		remove(nameSubmit);
+
+		_gamedata.flush(); // Save the name
 	}
 
 	function getButtons()
@@ -192,8 +212,6 @@ class MainMenuState extends FlxState
 		adventure = new FlxButton(405, 65, "", openAdventure);
 		// game data \\
 		trace("[SYSTEM] trying to load game save data...");
-		_gamedata = new FlxSave();
-		_gamedata.bind("Save");	
 		if (_gamedata.data.newgame == null)
 		{
 			trace("[GAME DATA] Failed!"); 
@@ -204,6 +222,7 @@ class MainMenuState extends FlxState
 			_gamedata.data.minigames = false;
 			_gamedata.data.survival = false;
 			_gamedata.data.fastpool = false;
+			_gamedata.data.name = null; // Player has no name, we have to get it whenever the prompt appears
 
 			_gamedata.flush();
 			trace("[GAME DATA] Reset back to default.");
@@ -436,22 +455,22 @@ class MainMenuState extends FlxState
 		// now back to me lol
 		// Debug \\
 		#if debug
-		if (FlxG.keys.justReleased.D)
-		{
-			remove(backdrop);
-			remove(background);
-			remove(sky);
-			remove(tree);
-			remove(selectMenu);
-		}
-		if (FlxG.keys.justReleased.A)
-		{
-			add(backdrop);
-			add(background);
-			add(sky);
-			add(tree);
-			add(selectMenu);
-		}
+		// if (FlxG.keys.justReleased.D)
+		// {
+		// 	remove(backdrop);
+		// 	remove(background);
+		// 	remove(sky);
+		// 	remove(tree);
+		// 	remove(selectMenu);
+		// }
+		// if (FlxG.keys.justReleased.A)
+		// {
+		// 	add(backdrop);
+		// 	add(background);
+		// 	add(sky);
+		// 	add(tree);
+		// 	add(selectMenu);
+		// }
 		DebugUtils.debug(nameTitle);
 		DebugUtils.debug(nameSubTitle);
 		if (FlxG.keys.pressed.R && FlxG.keys.pressed.CONTROL) // refresh lol

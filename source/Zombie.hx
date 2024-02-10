@@ -5,9 +5,8 @@ import haxe.Json;
 import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.Assets;
-import Projectile;
 
-typedef AnimLoader =
+typedef ZAnimLoader =
 {
 	var prefix:String;
 	var postfix:String;
@@ -17,37 +16,35 @@ typedef AnimLoader =
 	var looped:Bool;
 }
 
-typedef PlantJson= 
+typedef ZombieJson= 
 {
     var textureName:String;
     var health:Float;
-    var price:Float;
-    var isSpecial:Bool;
-    var anims:Array<AnimLoader>;
+    var speed:Float;
+    var anims:Array<ZAnimLoader>;
     var flipX:Bool;
 	var flipY:Bool;
 }
 
-class Plant extends FlxSprite{
+class Zombie extends FlxSprite{
 
-    public var jsonSystem:PlantJson;
-    public var isAsleep:Bool = false;
-	public var curPlant:String = 'peashooter';
-    public var isShooting:Bool = false;
+    public var jsonSystem:ZombieJson;
+	public var curZombie:String = 'basic';
+    public var isWalking:Bool = false;
     public var animOffsets:Map<String, Array<Dynamic>>;
 
-    public function new(x:Float, y:Float, ?plantName:String = "peashooter", ?asleep:Bool = false){
+    public function new(x:Float, y:Float, ?zombieName:String = "basic", ?shouldWalk:Bool = false){
         super(x,y);
-        curPlant = plantName;
+        curZombie = zombieName;
         animOffsets = new Map<String, Array<Dynamic>>();
-        isAsleep = asleep;
+        isWalking = shouldWalk;
         var tex:FlxAtlasFrames;
-        switch(curPlant)
+        switch(curZombie)
         {
             default:
-                jsonSystem = Json.parse(Assets.getText(Paths.json(curPlant, 'data/plants/$curPlant')));
+                jsonSystem = Json.parse(Assets.getText(Paths.json(curZombie, 'data/zombies/$curZombie')));
 
-                tex = Paths.getSparrowAtlas('plants/${jsonSystem.textureName}');
+                tex = Paths.getSparrowAtlas('zombies/$curZombie/${jsonSystem.textureName}');
                 frames = tex;
 
                 for (anim in jsonSystem.anims){
@@ -63,18 +60,13 @@ class Plant extends FlxSprite{
 
                 flipX = jsonSystem.flipX;
 				flipY = jsonSystem.flipY;
-
-                if (!asleep)
+                
+                if (!isWalking)
                     playAnim("idle");
                 else
-                    playAnim("sleeping");
+                    playAnim("walk");
         }
     }
-
-    public function addOffset(name:String, x:Float = 0, y:Float = 0)
-        {
-            animOffsets[name] = [x, y];
-        }
 
     override function update(elapsed:Float){
         if (animation.curAnim.finished)
@@ -84,17 +76,20 @@ class Plant extends FlxSprite{
     }
 
     public function exist(){
-        if (animation.curAnim.finished && animation.curAnim.name == "idle" && !isShooting)
+
+        if (isWalking){
+            this.velocity.x = jsonSystem.speed - (jsonSystem.speed * 2); // makes the value negative so it goes left
+            playAnim("walk");
+        }
+
+        if (animation.curAnim.finished && animation.curAnim.name == "idle" && !isWalking)
             playAnim("idle");
 
-        if (animation.curAnim.finished && animation.curAnim.name == "shoot" && isShooting)
-            shoot("pea");
     }
-
-    private function shoot(projectile:String){
-        playAnim("shoot");
-        //newprojectile - saving this till i think of the best way to add the projectiles ingame
-    }
+    public function addOffset(name:String, x:Float = 0, y:Float = 0)
+        {
+            animOffsets[name] = [x, y];
+        }
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
