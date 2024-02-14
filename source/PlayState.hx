@@ -23,7 +23,7 @@ class PlayState extends FlxState
 	var background:Lawn;
 	var backgroundGrass:FlxSprite; // reference for size and stuff
 	var seedPack:SeedPacket;
-	var grid:FlxSprite;
+	var grid:FlxSprite; //for plant placement
 	var _gamedata:FlxSave;
 	var menuButton:FlxButton;
 
@@ -58,13 +58,21 @@ class PlayState extends FlxState
 		super.create();
 
 
-		background = new Lawn(-220, 0, "grass",5,5);
+		background = new Lawn(-220, 0, "grass",5,9);
 		backgroundGrass = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
 
 		getLevel();
 		add(background);
 		add(backgroundGrass);
+
+		grid = FlxGridOverlay.create(1, 1, background.rowsNumber, background.colsNumber);
+		grid.antialiasing = false;
+		grid.scale.set(90, 90);
+		grid.updateHitbox();
+		grid.x += 100;
+		add(grid);
+
 
 		plant = new Plant(100,100,"peashooter",false);
 		add(plant);
