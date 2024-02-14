@@ -307,10 +307,12 @@ class MainMenuState extends FlxState
 		if (_gamedata.data.minigames == true)
 		{
 			trace("[SYSTEM] MiniGame Unlocked");
+			FlxG.switchState(new MinigameState());
 		}
 		else
 		{
 			trace("[SYSTEM] MiniGame Locked");
+			FlxG.switchState(new MinigameState());
 		}
 	}
 
