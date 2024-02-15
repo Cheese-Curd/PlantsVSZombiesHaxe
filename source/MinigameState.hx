@@ -5,6 +5,8 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.util.FlxColor;
 import flixel.text.FlxText;
+import flixel.group.FlxGroup;
+import flixel.FlxG;
 
 typedef MinigameJson = {
     var name:String;
@@ -13,7 +15,7 @@ typedef MinigameJson = {
     var image:String;
 	var locked:Bool;
 }
-typedef Page= {
+typedef Page = {
     var page:Array<MinigameJson>;
 }
 
@@ -22,6 +24,7 @@ class MinigameState extends FlxState{
     var titleTxt:FlxText; //minigame text at the top of screen
     //
     var pages:Array<Page>;
+    var windowGroup:FlxTypedGroup<ChallengeWindow>;
 
     override public function create(){
         super.create();
@@ -34,8 +37,27 @@ class MinigameState extends FlxState{
         titleTxt.font = 'assets/fonts/HouseofTerror-Regular.ttf';
         add(titleTxt);
 
+
     }
 
 
 
+}
+
+class ChallengeWindow extends FlxSprite{
+    override public function new(x:Float,y:Float, minigame:String){
+        super(x,y);
+        this.loadGraphic("assets/images/menu/minigames/Challenge_Window.png");
+        
+    }
+    override public function update(elapsed:Float){
+        //if(FlxG.overlap(FlxG.mouse, this)){
+            //this.loadGraphic("assets/images/menu/minigames/Challenge_Window_Highlight.png");
+        //}
+       // else{
+            //this.loadGraphic("assets/images/menu/minigames/Challenge_Window.png");
+       // }
+
+        super.update(elapsed);
+    }
 }

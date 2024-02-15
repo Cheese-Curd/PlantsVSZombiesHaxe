@@ -69,6 +69,7 @@ class Plant extends FlxSprite{
                 else
                     playAnim("sleeping");
         }
+        this.updateHitbox();
     }
 
     public function addOffset(name:String, x:Float = 0, y:Float = 0)

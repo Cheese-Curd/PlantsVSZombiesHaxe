@@ -41,6 +41,20 @@ class Zombie extends FlxSprite{
         var tex:FlxAtlasFrames;
         switch(curZombie)
         {
+            case "zombieTemplate":
+
+                tex = Paths.getSparrowAtlas('zombies/basic/zombie');
+                frames = tex;
+
+                animation.addByPrefix("idle", "idle zombie", 12, false);
+				addOffset("idle", 0, 0);
+                animation.addByPrefix("walk", "walk zombie", 12, false);
+				addOffset("walk", 0, 0);
+                
+                if (!isWalking)
+                    playAnim("idle");
+                else
+                    playAnim("walk");
             default:
                 jsonSystem = Json.parse(Assets.getText(Paths.json(curZombie, 'data/zombies/$curZombie')));
 
