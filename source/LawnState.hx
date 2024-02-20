@@ -1,0 +1,71 @@
+package;
+
+import flixel.util.FlxSave;
+import AngelUtils; // for json reading
+import discord_rpc.DiscordRpc;
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.util.FlxColor;
+import flixel.FlxState;
+import flixel.addons.display.FlxGridOverlay;
+import flixel.ui.FlxButton;
+import DebugUtils; // Funny debug
+import Plant;
+import Lawn;
+import SeedPacket;
+
+typedef LevelJson= 
+{
+    ?var flags:Int;
+    var lawn:String;
+    var possibleZombies:Array<String>;
+}
+
+class LawnState extends FlxState
+{
+
+	override public function onFocus()
+	{
+		super.onFocus();
+		FlxG.sound.music.resume();
+		trace("[SYSTEM] User Focused the window");
+	}
+
+	override public function onFocusLost()
+	{
+		super.onFocusLost();
+		FlxG.sound.music.pause();
+		trace("[SYSTEM] User Lost Focus the window");
+	}
+    
+    var lawnJson:LevelJson;
+
+    var background:Lawn;
+
+    public var curLevel:String = '1-1'; 
+
+    public var zombieList:Array<Zombie> = []; 
+    public var plantList:Array<Plant> = []; 
+
+    override public function create()
+    {
+        lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
+
+
+
+
+
+
+
+
+
+
+        
+    }
+
+
+
+
+
+
+}
