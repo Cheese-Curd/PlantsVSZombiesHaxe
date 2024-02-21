@@ -4,6 +4,7 @@ import AngelUtils; // for masking lol
 import discord_rpc.DiscordRpc;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxRect;
 import flixel.FlxState;
 import flixel.system.FlxAssets;
 import flixel.text.FlxText;
@@ -195,6 +196,9 @@ class LoadingState extends FlxState
 		{
 			FlxG.switchState(new LoadingState());
 		}
+
+		if (grass_ball != null)
+            bar_grass.clipRect = new FlxRect(0, 0, (grass_ball.x - bar_grass.x), bar_grass.height);
 	}
 
 	// Audio Pausing \\
