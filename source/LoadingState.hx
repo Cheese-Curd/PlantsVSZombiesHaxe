@@ -86,7 +86,7 @@ class LoadingState extends FlxState
 			FlxTween.tween(eGunner, {alpha: 1}, 2.3, {ease: FlxEase.expoInOut});
 		});
 
-		new FlxTimer().start(4, function(tmr:FlxTimer)
+		new FlxTimer().start(2, function(tmr:FlxTimer) // 4 secs kinda long for this
 		{
 			textPlay();
 		});
@@ -117,6 +117,7 @@ class LoadingState extends FlxState
 			remove(eGunner);
 			// Loading Text Properties \\
 			loadingtxt = new FlxText(347, 544, 0, "Loading...", 24);
+			loadingtxt.color = FlxColor.fromRGB(217, 183, 32); // no more white loadingtxt
 			// Contiue Button Properties \\
 			continueBttn = new FlxButton(319, 553, "", continuefunc);
 	
@@ -153,8 +154,8 @@ class LoadingState extends FlxState
 			// Moving the grass thing \\
 			/* [INSERT GRASS MASKING CODE HERE] */
 			FlxTween.tween(grass_ball, {angle: 360.0}, 5, {type: FlxTweenType.LOOPING}); // speeeen
-			FlxTween.tween(grass_ball, {x: 508}, 10, {type: FlxTweenType.ONESHOT}); // yo, he movin'
-			FlxTween.tween(grass_ball, {"scale.x": 0.8, "scale.y": 0.8}, 10, {type: FlxTweenType.ONESHOT}); // oh god he is shrinking oh god
+			FlxTween.tween(grass_ball, {x: 508, y: 500}, 10, {type: FlxTweenType.ONESHOT}); // yo, he movin'
+			FlxTween.tween(grass_ball.scale, {x: 0.4, y: 0.4}, 10, {type: FlxTweenType.ONESHOT}); // oh god he is shrinking oh god
 			new FlxTimer().start(10, function(tmr:FlxTimer)
 			{
 				remove(loadingtxt);
