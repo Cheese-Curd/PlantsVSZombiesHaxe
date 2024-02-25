@@ -68,8 +68,10 @@ class Plant extends FlxSprite{
                     playAnim("idle");
                 else
                     playAnim("sleeping");
+
+                
         }
-        this.updateHitbox();
+        
     }
 
     public function addOffset(name:String, x:Float = 0, y:Float = 0)
@@ -78,9 +80,10 @@ class Plant extends FlxSprite{
         }
 
     override function update(elapsed:Float){
-        if (animation.curAnim.finished)
+        if (animation.curAnim.finished){
             exist();
-
+        }
+        this.updateHitbox();
         super.update(elapsed);
     }
 
@@ -99,7 +102,7 @@ class Plant extends FlxSprite{
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
-		animation.play(AnimName, Force, Reversed, Frame); //so i dont specify EACH F###ING TIME
+		animation.play(AnimName, Force, Reversed, Frame); //from funkin lol
         var daOffset = animOffsets.get(AnimName);
 		if (animOffsets.exists(AnimName))
 		{

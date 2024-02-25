@@ -44,30 +44,6 @@ class Zombie extends FlxSprite{
         var path:String;
         switch(curZombie)
         {
-            case "what":
-                jsonSystem = Json.parse(Assets.getText(Paths.json(curZombie, 'data/zombies/$curZombie')));
-
-                tex = Paths.getSparrowAtlas('zombies/$curZombie/${jsonSystem.textureName}');
-                frames = tex;
-
-                for (anim in jsonSystem.anims){
-					if (anim.fps < 1)
-						anim.fps = 12;
-					
-					if (anim.looped != true && anim.looped != false)
-						anim.looped = false;
-
-					animation.addByPrefix(anim.prefix, anim.postfix, anim.fps, anim.looped);
-					addOffset(anim.prefix, anim.x, anim.y);
-				}
-
-                flipX = jsonSystem.flipX;
-				flipY = jsonSystem.flipY;
-                
-                if (!isWalking)
-                    playAnim("idle");
-                else
-                    playAnim("walk");
             default:
                 jsonSystem = Json.parse(Assets.getText(Paths.json(curZombie, 'data/zombies/$curZombie')));
 
@@ -100,8 +76,7 @@ class Zombie extends FlxSprite{
 
         if (animation.curAnim.finished)
             if (isWalking){
-                var randAnimNum:Int = FlxG.random.int(0, 1);
-                this.playAnim("walk" + randAnimNum);
+                this.playAnim("walk");
             }
 
         super.update(elapsed);

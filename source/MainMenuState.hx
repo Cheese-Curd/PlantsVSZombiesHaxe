@@ -297,7 +297,7 @@ class MainMenuState extends FlxState
 
 		new FlxTimer().start(6.5, (tmr:FlxTimer) ->
 		{
-			FlxG.switchState(new PlayState());
+			FlxG.switchState(new LawnState());
 		});
 	}
 

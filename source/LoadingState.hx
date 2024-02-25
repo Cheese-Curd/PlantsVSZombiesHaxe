@@ -1,3 +1,4 @@
+
 package;
 
 import AngelUtils; // for masking lol
@@ -95,7 +96,7 @@ class LoadingState extends FlxState
 
 	function textPlay()
 	{
-		new FlxTimer().start(4.0, function(tmr:FlxTimer)
+		new FlxTimer().start(2.0, function(tmr:FlxTimer)
 		{
 			trace('Should have switched to main loading');
 			mainLoading();
@@ -197,8 +198,13 @@ class LoadingState extends FlxState
 			FlxG.switchState(new LoadingState());
 		}
 
-		if (grass_ball != null)
-            bar_grass.clipRect = new FlxRect(0, 0, (grass_ball.x - bar_grass.x), bar_grass.height);
+		if (grass_ball != null){
+			var clipWidth:Float = FlxG.mouse.x - bar_dirt.x; // Use FlxG.mouse.x as an example; replace it with the actual x-coordinate of your object
+			clipWidth = Math.min(clipWidth, bar_dirt.width); // Ensure clipWidth doesn't exceed the width of the background bar
+			clipWidth = Math.max(clipWidth, 0); // Ensure clipWidth doesn't go below 0
+
+			bar_grass.clipRect = new FlxRect(bar_dirt.x, bar_dirt.y, clipWidth, bar_grass.height);
+		}
 	}
 
 	// Audio Pausing \\

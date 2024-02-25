@@ -16,7 +16,7 @@ import SeedPacket;
 
 typedef LevelJson= 
 {
-    ?var flags:Int;
+    var ?flags:Int;
     var lawn:String;
     var possibleZombies:Array<String>;
 }
@@ -40,7 +40,9 @@ class LawnState extends FlxState
     
     var lawnJson:LevelJson;
 
-    var background:Lawn;
+	var plant:Plant;
+	var zombie:Zombie;
+	var background:Lawn;
 
     public var curLevel:String = '1-1'; 
 
@@ -49,11 +51,16 @@ class LawnState extends FlxState
 
     override public function create()
     {
-        lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
+        //lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
 
+		background = new Lawn(-220, 0, "grass", 9,5);
+		add(background);
 
+        plant = new Plant(100,100,"peashooter",false);
+		add(plant);
 
-
+		zombie = new Zombie(600,100,"basic",true);
+		//add(zombie);
 
 
 
