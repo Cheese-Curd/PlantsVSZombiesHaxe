@@ -280,6 +280,7 @@ class MainMenuState extends FlxState
 		if (_gamedata.data.newgame == true)
 		{
 			trace("[SYSTEM] New Adventure");
+			LawnState.curLevel = "1-1";
 		}
 		else
 		{

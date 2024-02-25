@@ -23,7 +23,6 @@ typedef LevelJson=
 
 class LawnState extends FlxState
 {
-
 	override public function onFocus()
 	{
 		super.onFocus();
@@ -44,14 +43,14 @@ class LawnState extends FlxState
 	var zombie:Zombie;
 	var background:Lawn;
 
-    public var curLevel:String = '1-1'; 
-
+    public static var curLevel:String = '1-1'; 
     public var zombieList:Array<Zombie> = []; 
     public var plantList:Array<Plant> = []; 
 
     override public function create()
     {
         //lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
+		trace('playing currently ${curLevel}');
 
 		background = new Lawn(-220, 0, "grass", 9,5);
 		add(background);
@@ -60,19 +59,7 @@ class LawnState extends FlxState
 		add(plant);
 
 		zombie = new Zombie(600,100,"basic",true);
-		//add(zombie);
 
-
-
-
-
-
-        
     }
-
-
-
-
-
 
 }
