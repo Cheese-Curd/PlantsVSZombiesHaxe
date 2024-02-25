@@ -9,6 +9,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 import openfl.Assets;
+import flixel.ui.FlxButton;
 
 typedef MinigameJson = {
     var name:String;
@@ -26,9 +27,11 @@ typedef Page = {
 class MinigameState extends FlxState{
     var background:FlxSprite;
     var titleTxt:FlxText; //minigame text at the top of screen
-    //
+    var exitButton:FlxButton;
+    var exitText:FlxText;
     var windowGroup:FlxTypedGroup<ChallengeWindow>;
     var curPage:Int = 0;
+    public static var buttonColor:FlxColor = FlxColor.fromRGB(41,39,97);
 
     public var minigameJson:Page;
 
@@ -41,21 +44,38 @@ class MinigameState extends FlxState{
         titleTxt = new FlxText(305, 20, 216, 'Minigames', 36);
         titleTxt.color = FlxColor.WHITE;
         titleTxt.borderStyle = OUTLINE;
-        titleTxt.borderSize = 1.7;
+        titleTxt.borderSize = 2;
         titleTxt.font = 'assets/fonts/HouseofTerror-Regular.ttf';
+        titleTxt.screenCenter(X);
         add(titleTxt);
 
         windowGroup = new FlxTypedGroup<ChallengeWindow>();
         add(windowGroup);
 
+        exitButton = new FlxButton(10, FlxG.height - 35, "", exitMinigames);
+		exitButton.loadGraphic('assets/images/ui/SeedChooser_Button2.png', true, 111, 26);
+        add(exitButton);
+
+        exitText = new FlxText(exitButton.x + 15, exitButton.y + 5);
+        exitText.text = "Back to Menu";
+        exitText.color = buttonColor;
+        exitText.size = 14;
+        add(exitText);
+
         changePage(0);
     }
+
+    function exitMinigames()
+        {
+            FlxG.sound.play('assets/sounds/buttonclick.ogg'); // button sound
+            FlxG.switchState(new MainMenuState());
+        }
 
     private function changePage(pageInt:Int = 0){
         minigameJson = AngelUtils.JsonifyFile('assets/data/minigames/page${curPage}.json');
 
         for (pageData in minigameJson.page){
-            var minigameWindow:ChallengeWindow = new ChallengeWindow(70 * pageData.col + 10, pageData.row * 60 + 40, pageData.name, pageData.levelName, pageData.locked, pageData.textOffsetX,pageData.textOffsetY);
+            var minigameWindow:ChallengeWindow = new ChallengeWindow(75 * pageData.col + 10, pageData.row * 60 + 50, pageData.name, pageData.levelName, pageData.locked, pageData.textOffsetX,pageData.textOffsetY);
             windowGroup.add(minigameWindow);
         }
 
@@ -91,7 +111,7 @@ class ChallengeWindow extends FlxSpriteGroup{
         minigameName = new FlxText(x + 15 + textOffsetX,y + 80 + textOffsetY);
         minigameName.text = minigame;
         minigameName.size = 17;
-        minigameName.color = FlxColor.BLUE;
+        minigameName.color = MinigameState.buttonColor;
         //minigameName.fieldWidth = 20;
         minigameName.alignment = CENTER;
         if (isLocked){
@@ -111,7 +131,7 @@ class ChallengeWindow extends FlxSpriteGroup{
             }
             else{
                 window.loadGraphic("assets/images/menu/minigames/Challenge_Window.png");
-                minigameName.color = FlxColor.BLUE;
+                minigameName.color = MinigameState.buttonColor;
             }
             if (FlxG.mouse.pressed)
                 {
