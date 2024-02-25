@@ -1,0 +1,50 @@
+{
+  "page": [
+      {
+        "name": "Zombotany",
+        "levelName": "zombotany",
+        "col":0,
+        "row":0,
+        "locked" : false,
+        "textOffsetX" : 4,
+        "textOffsetY" : 0
+      },
+      {
+        "name": "Wall-nut \nBowling",
+        "levelName": "bowling",
+        "col":1,
+        "row":0,
+        "img": "bowling",
+        "locked" : false,
+        "textOffsetX" : 10,
+        "textOffsetY" : -10
+      },
+      {
+        "name": "Slot Machine",
+        "levelName": "slotmachine",
+        "col":2,
+        "row":0,
+        "locked" : false,
+        "textOffsetX" : -3,
+        "textOffsetY" : 0
+      },
+      {
+        "name": "It's Raining \nSeeds",
+        "levelName": "rainingseeds",
+        "col":3,
+        "row":0,
+        "locked" : true,
+        "textOffsetX" : 0,
+        "textOffsetY" : -10
+      },
+      {
+        "name": "Beghouled",
+        "levelName": "beghouled",
+        "col":4,
+        "row":0,
+        "locked" : true,
+        "textOffsetX" : 5,
+        "textOffsetY" : 0
+      }
+  ]
+}

@@ -5,6 +5,7 @@ import AngelUtils; // for json reading
 import discord_rpc.DiscordRpc;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
@@ -44,13 +45,16 @@ class LawnState extends FlxState
 	var background:Lawn;
 
     public static var curLevel:String = '1-1'; 
+	public static var displayLevel:String = "1-1";
     public var zombieList:Array<Zombie> = []; 
     public var plantList:Array<Plant> = []; 
 
+	public static var houseTxt:FlxText;
+
     override public function create()
     {
-        //lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
-		trace('playing currently ${curLevel}');
+        // lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
+		// trace('playing currently ${curLevel}');
 
 		background = new Lawn(-220, 0, "grass", 9,5);
 		add(background);
@@ -60,6 +64,14 @@ class LawnState extends FlxState
 
 		zombie = new Zombie(600,100,"basic",true);
 
+		houseTxt = new FlxText(100,100);
+        houseTxt.color = FlxColor.WHITE;
+        houseTxt.borderStyle = OUTLINE;
+        houseTxt.borderSize = 2;
+        houseTxt.font = 'assets/fonts/HouseofTerror-Regular.ttf';
+		houseTxt.text = displayLevel;
+		houseTxt.size = 14;
+		add(houseTxt);
     }
 
 }
