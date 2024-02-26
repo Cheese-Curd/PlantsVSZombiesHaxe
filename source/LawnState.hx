@@ -41,7 +41,6 @@ class LawnState extends FlxState
     var lawnJson:LevelJson;
 
 	var plant:Plant;
-	var zombie:Zombie;
 	var background:Lawn;
 
     public static var curLevel:String = '1-1'; 
@@ -56,21 +55,19 @@ class LawnState extends FlxState
         // lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
 		// trace('playing currently ${curLevel}');
 
-		background = new Lawn(-220, 0, "grass", 9,5);
+		background = new Lawn(0, 0, "grass", 9,5);
 		add(background);
 
         plant = new Plant(100,100,"peashooter",false);
 		add(plant);
 
-		zombie = new Zombie(600,100,"basic",true);
-
-		houseTxt = new FlxText(100,100);
+		houseTxt = new FlxText(300,300);
         houseTxt.color = FlxColor.WHITE;
         houseTxt.borderStyle = OUTLINE;
         houseTxt.borderSize = 2;
         houseTxt.font = 'assets/fonts/HouseofTerror-Regular.ttf';
 		houseTxt.text = displayLevel;
-		houseTxt.size = 14;
+		houseTxt.size = 40;
 		add(houseTxt);
     }
 
