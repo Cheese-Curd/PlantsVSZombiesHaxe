@@ -11,13 +11,10 @@ There are pre-compiled builds in the [releases](https://github.com/Electr0Gunner
 
 ## <p align="center">Fun stuff</p>
 
-Wanna mess with image textures or entity stats?\
-GO AHEAD!\
-I made the entity stats jsons for a reason, it's not modding but it's close enough.\
-**Just don't say that you made this because if I find it I will ask for you to take it down.**\
-**The least you have to do is post the link to the repo, not that hard.**\
-Also if you make a mod of this by making a fork, **please keep them open-source.**\
-If [FNF](https://github.com/ninjamuffin99/Funkin) can do it, so can I.
+This project softcodes most aspect of PvZ, so that means you can:
+1. Change Zombie/Plants Stats
+2. Add new Zombies/Plants
+3. Do all types of cool stuff usin H-Script (NOT IMPLEMENTED YET)
 
 ## <p align="center">Contributing</p>
 [Pull Requests](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine/pulls) are welcome. For major changes, please open an [issues](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine/issues) first to discuss what you would like to change.
@@ -34,6 +31,7 @@ All there is to know on compiling this game!
 haxelib install flixel
 haxelib install flixel-addons
 haxelib install flixel-ui
+haxelib git flxanimate https://github.com/Dot-Stuff/flxanimate
 ```
 You also need Git, cause discord RPC and shit. Dumb, I know.
 1. Install [git-scm](https://git-scm.com/downloads)
