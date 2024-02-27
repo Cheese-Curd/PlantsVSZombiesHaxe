@@ -19,7 +19,7 @@
           "postfix": "peashooter idle",
           "prefix": "idle",
           "fps":24,
-          "looped": false
+          "looped": true
         }
     ]
 }

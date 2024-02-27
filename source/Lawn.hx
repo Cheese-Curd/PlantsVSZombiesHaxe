@@ -26,6 +26,7 @@ class Lawn extends FlxSpriteGroup
 	public var gridHei:Int = 500;
 	public var tileWid:Float = 80;
 	public var tileHei:Float = 100;
+	public var tileData:Array<Array<Tile>>;
 
 	public function new(x:Float = -220, y:Float = 0, backgroundType:String = "grass", rowsNum:Int = 5, colsNum:Int = 9)
 	{
@@ -45,4 +46,33 @@ class Lawn extends FlxSpriteGroup
 	{
 		lawnSprite.loadGraphic(imagePath);
 	}
+}
+
+class Tile
+{
+	var tileType:TileType;
+	var hasTilePlant:Bool; // for Plants like Lilypad &  Flower Pot.
+	var hasPrimaryPlant:Bool; // for Plants like Peashooter ect.
+	var hasSecondaryPlant:Bool; // for Plants like Pumpkin ect.
+	var storedPlants:Array<Plant>;
+
+	public function new(tileType:TileType = NORMAL)
+	{
+		this.tileType = tileType;
+		this.hasPrimaryPlant = false;
+		this.hasSecondaryPlant = false;
+		this.hasSecondaryPlant = false;
+		this.storedPlants = [];
+	}
+
+	public function appendPlant(plant:Plant) {}
+}
+
+enum TileType
+{
+	INVALID;
+	NORMAL;
+	DESTROYED;
+	WATER;
+	ROOF;
 }

@@ -7,7 +7,8 @@ import openfl.display.FPS;
 
 class Main extends Sprite
 {
-	public static var fpsCounter:FPS;
+	static public var fpsCounter:FPS;
+	static public var antiAlias:Bool = true;
 
 	public function new()
 	{

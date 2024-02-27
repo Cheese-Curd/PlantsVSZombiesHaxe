@@ -66,18 +66,22 @@ class LawnState extends FlxState
 		This will check if the current grid Array of that specific index is empty. 
 		If it is empty, then it will allow plants to be placed.
 	 */
-	public var gridData:Array<Array<Array<Int>>> = [[[]]];
+	public var tiles:Array<Array<Array<Int>>> = [[[]]];
 
 	override public function create()
 	{
 		// lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
 		// trace('playing currently ${curLevel}');
 
+		// Load Plant Animations
+		for (plant in Plant.plantIDs)
+			AnimationHandler.parseAnimation('data/plants', plant);
+
 		background = new Lawn(-220, 0, "grass", 9, 5);
 		add(background);
 
 		for (i in 0...background.rowsNumber)
-			gridData[i] = [for (j in 0...background.colsNumber) []];
+			tiles[i] = [for (j in 0...background.colsNumber) []];
 
 		tileSpr = new FlxSprite().makeGraphic(Std.int(background.gridWid / background.rowsNumber), Std.int(background.gridHei / background.colsNumber),
 			0x7FFFFFFF);
@@ -115,7 +119,7 @@ class LawnState extends FlxState
 			&& FlxG.mouse.x <= background.gridWid + 30
 			&& FlxG.mouse.y >= 75
 			&& FlxG.mouse.y <= background.gridHei + 75
-			&& !gridData[curRow][curCol].contains(0);
+			&& !tiles[curRow][curCol].contains(0);
 
 		if (tileSpr.visible)
 		{
@@ -130,7 +134,7 @@ class LawnState extends FlxState
 
 				var plant = new Plant(plantOverlay.x, plantOverlay.y);
 				plantGrp.add(plant);
-				gridData[curRow][curCol].push(0);
+				tiles[curRow][curCol].push(0);
 			}
 		}
 	}
