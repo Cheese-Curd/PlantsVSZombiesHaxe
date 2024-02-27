@@ -1,4 +1,3 @@
-
 package;
 
 import AngelUtils; // for masking lol
@@ -88,7 +87,7 @@ class LoadingState extends FlxState
 			FlxTween.tween(eGunner, {alpha: 1}, 2.3, {ease: FlxEase.expoInOut});
 		});
 
-		new FlxTimer().start(4, function(tmr:FlxTimer)
+		new FlxTimer().start(2, function(tmr:FlxTimer)
 		{
 			textPlay();
 		});
@@ -96,7 +95,7 @@ class LoadingState extends FlxState
 
 	function textPlay()
 	{
-		new FlxTimer().start(4.0, function(tmr:FlxTimer)
+		new FlxTimer().start(2.0, function(tmr:FlxTimer)
 		{
 			trace('Should have switched to main loading');
 			mainLoading();
@@ -108,7 +107,10 @@ class LoadingState extends FlxState
 		FlxTween.tween(popcap_logo, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(popcap, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
 		FlxTween.tween(eliana, {alpha: 0}, 2, {ease: FlxEase.expoInOut});
-		new FlxTimer().start(0.3, function(tmr:FlxTimer) { FlxTween.tween(eGunner, {alpha: 0}, 1.7, {ease: FlxEase.expoInOut}); });
+		new FlxTimer().start(0.3, function(tmr:FlxTimer)
+		{
+			FlxTween.tween(eGunner, {alpha: 0}, 1.7, {ease: FlxEase.expoInOut});
+		});
 
 		new FlxTimer().start(2, function(tmr)
 		{
@@ -122,7 +124,7 @@ class LoadingState extends FlxState
 			loadingtxt.color = FlxColor.fromRGB(217, 183, 32); // no more white loadingtxt
 			// Contiue Button Properties \\
 			continueBttn = new FlxButton(319, 553, "", continuefunc);
-	
+
 			// Load the start button image \\
 			continueBttn.loadGraphic('assets/images/menu/loading/strtbttn.png', true, 165, 12);
 			// add background \\
@@ -138,7 +140,7 @@ class LoadingState extends FlxState
 			haxe_edition.font = 'assets/fonts/HouseofTerror-Regular.ttf';
 			add(haxe_edition);
 			// Loading Bar \\
-	
+
 			bar_dirt = new FlxSprite(244, 535).loadGraphic('assets/images/menu/loading/LoadBar_dirt.png');
 			bar_grass = new FlxSprite(243, 520).loadGraphic('assets/images/menu/loading/LoadBar_grass.png');
 			grass_ball = new FlxSprite(231, 484).loadGraphic('assets/images/menu/loading/SodRollCap.png');
@@ -198,7 +200,8 @@ class LoadingState extends FlxState
 			FlxG.switchState(new LoadingState());
 		}
 
-		if (grass_ball != null){
+		if (grass_ball != null)
+		{
 			var clipWidth:Float = FlxG.mouse.x - bar_dirt.x; // Use FlxG.mouse.x as an example; replace it with the actual x-coordinate of your object
 			clipWidth = Math.min(clipWidth, bar_dirt.width); // Ensure clipWidth doesn't exceed the width of the background bar
 			clipWidth = Math.max(clipWidth, 0); // Ensure clipWidth doesn't go below 0

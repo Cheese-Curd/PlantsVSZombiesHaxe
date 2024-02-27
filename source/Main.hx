@@ -7,12 +7,13 @@ import openfl.display.FPS;
 
 class Main extends Sprite
 {
-	public static var fpsCounter:FPS;
+	static public var fpsCounter:FPS;
+	static public var antiAlias:Bool = true;
 
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(0, 0, LoadingState,60,60,false,false));
+		addChild(new FlxGame(800, 600, LoadingState, 60, 60, false, false));
 		FlxG.autoPause = false;
 
 		// mouse \\
