@@ -16,14 +16,13 @@ import SeedPacket;
 
 class PlayState extends FlxState
 {
-	//var planttype = DataShit.plantType[0];
-	var plant:Plant;
+	// var planttype = DataShit.plantType[0];
 	var zombie:Zombie;
 	var levelType = 'grass';
 	var background:Lawn;
 	var backgroundGrass:FlxSprite; // reference for size and stuff
 	var seedPack:SeedPacket;
-	var grid:FlxSprite; //for plant placement
+	var grid:FlxSprite; // for plant placement
 	var _gamedata:FlxSave;
 	var menuButton:FlxButton;
 
@@ -57,8 +56,7 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-
-		background = new Lawn(-220, 0, "grass",5,9);
+		background = new Lawn(-220, 0, "grass", 5, 9);
 		backgroundGrass = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
 
@@ -66,21 +64,17 @@ class PlayState extends FlxState
 		add(background);
 		add(backgroundGrass);
 
-		grid = FlxGridOverlay.create(1, 1, background.rowsNumber, background.colsNumber);
+		grid = FlxGridOverlay.create(1, 1, background.rows, background.columns);
 		grid.antialiasing = false;
 		grid.scale.set(90, 90);
 		grid.updateHitbox();
 		grid.x += 100;
 		add(grid);
 
-
-		plant = new Plant(100,100,"peashooter",false);
-		add(plant);
-
-		zombie = new Zombie(200,100,"basic",true);
+		zombie = new Zombie(200, 100, "basic", true);
 		add(zombie);
 
-		seedPack = new SeedPacket(0,0,"peashooter", 100);
+		seedPack = new SeedPacket(0, 0, "peashooter", 100);
 		seedPack.screenCenter();
 		seedPack.x += 150;
 		add(seedPack);
@@ -123,10 +117,8 @@ class PlayState extends FlxState
 		}
 	}
 
-	function pauseBitch() {
-		
-	}
-	
+	function pauseBitch() {}
+
 	function getLevel()
 	{
 		trace('level Type is ' + levelType);
@@ -231,7 +223,7 @@ class PlayState extends FlxState
 			};
 			getLevel();
 		}
-			DebugUtils.debug(menuButton);
+		DebugUtils.debug(menuButton);
 		if (FlxG.keys.justReleased.G)
 		{
 			if (levelType == 'grass_dirt')

@@ -1,5 +1,6 @@
 package;
 
+import haxe.Exception;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import openfl.geom.Point;
 import flixel.util.FlxSave;
@@ -42,7 +43,6 @@ class LawnState extends FlxState
 
 	var lawnJson:LevelJson;
 
-	var plant:Plant;
 	var background:Lawn;
 
 	public static var curLevel:String = '1-1';
@@ -58,7 +58,7 @@ class LawnState extends FlxState
 	public var curRow:Int = 0;
 	public var curCol:Int = 0;
 	public var tileSpr:FlxSprite;
-	public var plantOverlay:FlxSprite;
+	public var plantOverlay:Plant;
 
 	/*
 		Lets say we have a Peashooter. Peashooter is a normal plant, in which for example, get a plantable ID of 0. 
@@ -66,8 +66,6 @@ class LawnState extends FlxState
 		This will check if the current grid Array of that specific index is empty. 
 		If it is empty, then it will allow plants to be placed.
 	 */
-	public var tiles:Array<Array<Array<Int>>> = [[[]]];
-
 	override public function create()
 	{
 		// lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
@@ -77,14 +75,11 @@ class LawnState extends FlxState
 		for (plant in Plant.plantIDs)
 			AnimationHandler.parseAnimation('data/plants', plant);
 
-		background = new Lawn(-220, 0, "grass", 9, 5);
+		background = new Lawn();
 		add(background);
 
-		for (i in 0...background.rowsNumber)
-			tiles[i] = [for (j in 0...background.colsNumber) []];
-
-		tileSpr = new FlxSprite().makeGraphic(Std.int(background.gridWid / background.rowsNumber), Std.int(background.gridHei / background.colsNumber),
-			0x7FFFFFFF);
+		tileSpr = new FlxSprite().makeGraphic(Std.int(background.gridWid / background.rows), Std.int(background.gridHei / background.columns), 0x7FFFFFFF);
+		tileSpr.active = false;
 		add(tileSpr);
 
 		plantOverlay = new Plant(0, 0);
@@ -104,7 +99,8 @@ class LawnState extends FlxState
 		houseTxt.font = 'assets/fonts/HouseofTerror-Regular.ttf';
 		houseTxt.text = displayLevel;
 		houseTxt.size = 40;
-		add(houseTxt);
+		houseTxt.active = false;
+		// add(houseTxt);
 	}
 
 	override public function update(elapsed:Float)
@@ -112,14 +108,23 @@ class LawnState extends FlxState
 		super.update(elapsed);
 
 		// Funni thingie just gets what tile the mouse is currently on
-		curRow = Std.int(Math.max(0, Math.min(background.rowsNumber - 1, Math.round((FlxG.mouse.x - 30 - background.tileWid / 2) / background.tileWid))));
-		curCol = Std.int(Math.max(0, Math.min(background.colsNumber - 1, Math.round((FlxG.mouse.y - 75 - background.tileHei / 2) / background.tileHei))));
+		curRow = Std.int(Math.max(0, Math.min(background.rows - 1, Math.round((FlxG.mouse.x - 30 - background.tileWid / 2) / background.tileWid))));
+		curCol = Std.int(Math.max(0, Math.min(background.columns - 1, Math.round((FlxG.mouse.y - 75 - background.tileHei / 2) / background.tileHei))));
+
+		var currentTile = background.tileData[curRow][curCol];
+		var isValid = false;
+		if (plantOverlay.plantableType == DEFAULT)
+			isValid = !currentTile.hasDEFAULT
+		else if (plantOverlay.plantableType == TILED)
+			isValid = !currentTile.hasTILED
+		else if (plantOverlay.plantableType == SECONDARY)
+			isValid = !currentTile.hasSECONDARY;
 
 		tileSpr.visible = plantOverlay.visible = FlxG.mouse.x >= 30
 			&& FlxG.mouse.x <= background.gridWid + 30
 			&& FlxG.mouse.y >= 75
 			&& FlxG.mouse.y <= background.gridHei + 75
-			&& !tiles[curRow][curCol].contains(0);
+			&& isValid;
 
 		if (tileSpr.visible)
 		{
@@ -129,12 +134,10 @@ class LawnState extends FlxState
 			if (FlxG.mouse.justPressed && plantOverlay.visible)
 			{
 				#if debug
-				trace('Planted at [Row: $curRow\tColoumn: $curCol]');
+				trace('At Row ${curRow + 1}, Coloumn: ${curCol + 1}');
 				#end
 
-				var plant = new Plant(plantOverlay.x, plantOverlay.y);
-				plantGrp.add(plant);
-				tiles[curRow][curCol].push(0);
+				currentTile.appendPlant(plantOverlay.plantableType, () -> plantGrp.add(new Plant(plantOverlay.x, plantOverlay.y)));
 			}
 		}
 	}

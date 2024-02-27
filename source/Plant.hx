@@ -14,9 +14,11 @@ class Plant extends flixel.FlxSprite
 	public var isAsleep:Bool;
 	public var isShooting:Bool;
 
-	public function new(x:Float = 0, y:Float = 0, plantID:Int = 0, plantableType:PlantableType = DEFAULT, plantType:PlantType = DEFAULT)
+	public function new(x:Float = 0, y:Float = 0, plantID:Int = 0, plantableType:PlantableType = DEFAULT, plantType:PlantType = ALL)
 	{
 		super(x, y);
+		this.plantableType = plantableType;
+		this.plantType = plantType;
 
 		var key = plantIDs[plantID];
 		_handler = AnimationHandler.animations[key];
@@ -62,7 +64,7 @@ enum PlantableType
 
 enum PlantType
 {
-	DEFAULT; // Normal Plants ect.
+	ALL; // Normal Plants ect.
 	NIGHTONLY; // Sleeps during Day time
 	DAYONLY; // Sleeeps during Night time
 }

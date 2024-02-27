@@ -43,6 +43,8 @@ class Animation
 		this.sprite = new FlxSprite();
 		this.sprite.frames = frames;
 		this.sprite.animation = new FlxAnimationController(sprite);
+		this.sprite.kill();
+		this.sprite.active = false;
 	}
 }
 
