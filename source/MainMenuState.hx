@@ -49,6 +49,7 @@ class MainMenuState extends FlxState
 	var adventure_shadow:FlxSprite;
 	var minigame:FlxButton;
 	var minigame_shadow:FlxSprite;
+	var almanac:FlxButton;
 	// Pot Buttons \\
 	var options:FlxButton;
 	var help:FlxButton;
@@ -254,10 +255,18 @@ class MainMenuState extends FlxState
 		}
 		trace('[SYSTEM] Mini-Games button');
 
+		// Almanac Button \\
+		almanac = new FlxButton(405, 65, "", openAlmanac);
+		almanac.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Almanac.png', true, 99, 99);
+		almanac.y = 433;
+		almanac.x = 306;
+		trace('[SYSTEM] Almanac button');
+
 		add(adventure_shadow);
 		add(minigame_shadow);
 		add(adventure);
 		add(minigame);
+		add(almanac);
 
 		// Pot Buttons \\
 		trace('[SYSTEM] started Pot Button collection...');
@@ -316,6 +325,13 @@ class MainMenuState extends FlxState
 			FlxG.switchState(new MinigameState());
 		}
 	}
+
+	function openAlmanac()
+		{
+			FlxG.sound.play('assets/sounds/gravebutton.ogg'); // button sound
+			FlxG.switchState(new almanac.AlmanacState());
+
+		}
 
 	function fuckYouStop()
 	{

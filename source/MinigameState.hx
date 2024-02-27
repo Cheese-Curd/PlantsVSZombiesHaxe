@@ -87,7 +87,7 @@ class MinigameState extends FlxState{
 
 
 
-        pageRightButton = new FlxButton(280, FlxG.height - 35, "", movePageRight);
+        pageRightButton = new FlxButton(600, FlxG.height - 35, "", movePageRight);
 		pageRightButton.loadGraphic('assets/images/ui/SeedChooser_Button2.png', true, 111, 26);
         add(pageRightButton);
 
@@ -196,6 +196,7 @@ class ChallengeWindow extends FlxSpriteGroup{
         minigameName.text = minigame;
         minigameName.size = 17;
         minigameName.color = MinigameState.buttonColor;
+        minigameName.font = "assets/fonts/Brianne_s_hand.ttf";
         //minigameName.fieldWidth = 20;
         minigameName.alignment = CENTER;
         if (isLocked){
