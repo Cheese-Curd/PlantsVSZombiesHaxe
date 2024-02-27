@@ -3,39 +3,46 @@ package;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import haxe.Json;
-//import utils.TilePvZ as Tile;
+
+// import utils.TilePvZ as Tile;
 
 typedef LawnData =
 {
-    var cols:Int;
-    var rows:Int;
-    var type:String;
+	var cols:Int;
+	var rows:Int;
+	var type:String;
 }
 
-class Lawn extends FlxSpriteGroup{
-    public var jsonSystem:LawnData;
+class Lawn extends FlxSpriteGroup
+{
+	public var jsonSystem:LawnData;
 
-    public var colsNumber:Int;
-    public var rowsNumber:Int;
-   // public var tileZone:Tile;
-    public var lawnSprite:FlxSprite;
+	public var colsNumber:Int;
+	public var rowsNumber:Int;
+	// public var tileZone:Tile;
+	public var lawnSprite:FlxSprite;
 
-    public function new(x:Float = -220, y:Float = 0, backgroundType:String = "grass", rowsNum:Int = 5, colsNum:Int = 9){
-        super(x,y);
+	public var gridWid:Int = 720;
+	public var gridHei:Int = 500;
+	public var tileWid:Float = 80;
+	public var tileHei:Float = 100;
 
-        colsNumber = colsNum;
-        rowsNumber = rowsNum;
+	public function new(x:Float = -220, y:Float = 0, backgroundType:String = "grass", rowsNum:Int = 5, colsNum:Int = 9)
+	{
+		super(x, y);
 
-        //tileZone = new Tile(x,y,rowsNumber,colsNumber);
-        lawnSprite = new FlxSprite(x,y);
-        lawnSprite.loadGraphic('assets/images/levels/grassday/grassday.png');
-        add(lawnSprite);
-        //add(tileZone);
-    }
+		colsNumber = colsNum;
+		rowsNumber = rowsNum;
 
-    public function reloadImage(imagePath:String){
-        lawnSprite.loadGraphic(imagePath);
-    }
+		// tileZone = new Tile(x,y,rowsNumber,colsNumber);
+		lawnSprite = new FlxSprite();
+		lawnSprite.loadGraphic('assets/images/levels/grassday/grassday.png');
+		add(lawnSprite);
+		// add(tileZone);
+	}
 
-
+	public function reloadImage(imagePath:String)
+	{
+		lawnSprite.loadGraphic(imagePath);
+	}
 }
