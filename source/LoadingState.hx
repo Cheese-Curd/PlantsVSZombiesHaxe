@@ -88,7 +88,7 @@ class LoadingState extends FlxState
 			FlxTween.tween(eGunner, {alpha: 1}, 2.3, {ease: FlxEase.expoInOut});
 		});
 
-		new FlxTimer().start(2, function(tmr:FlxTimer) // 4 secs kinda long for this
+		new FlxTimer().start(4, function(tmr:FlxTimer)
 		{
 			textPlay();
 		});
@@ -96,7 +96,7 @@ class LoadingState extends FlxState
 
 	function textPlay()
 	{
-		new FlxTimer().start(2.0, function(tmr:FlxTimer)
+		new FlxTimer().start(4.0, function(tmr:FlxTimer)
 		{
 			trace('Should have switched to main loading');
 			mainLoading();
