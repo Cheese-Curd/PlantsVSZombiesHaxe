@@ -22,9 +22,9 @@ class Lawn extends FlxSpriteGroup
 	// public var tileZone:Tile;
 	public var lawnSprite:FlxSprite;
 
-	public var gridWid:Int = 750;
+	public var gridWid:Int = 725;
 	public var gridHei:Int = 500;
-	public var tileWid:Float = 83.333333;
+	public var tileWid:Float = 80;
 	public var tileHei:Float = 100;
 
 	public function new(x:Float = -220, y:Float = 0, backgroundType:String = "grass", rowsNum:Int = 5, colsNum:Int = 9)
