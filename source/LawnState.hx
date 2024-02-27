@@ -1,5 +1,6 @@
 package;
 
+import flixel.group.FlxGroup.FlxTypedGroup;
 import openfl.geom.Point;
 import flixel.util.FlxSave;
 import AngelUtils; // for json reading
@@ -50,10 +51,22 @@ class LawnState extends FlxState
 	public var zombieList:Array<Zombie> = [];
 	public var plantList:Array<Plant> = [];
 
+	public var plantGrp:FlxTypedGroup<Plant>;
+
 	public static var houseTxt:FlxText;
 
-	public var curTile:Point = new Point();
+	public var curRow:Int = 0;
+	public var curCol:Int = 0;
 	public var tileSpr:FlxSprite;
+	public var plantOverlay:FlxSprite;
+
+	/*
+		Lets say we have a Peashooter. Peashooter is a normal plant, in which for example, get a plantable ID of 0. 
+		Plants like Pumpkin on the other hand can be placed above plant so it has an ID of 1.
+		This will check if the current grid Array of that specific index is empty. 
+		If it is empty, then it will allow plants to be placed.
+	 */
+	public var gridData:Array<Array<Array<Int>>> = [[[]]];
 
 	override public function create()
 	{
@@ -63,12 +76,22 @@ class LawnState extends FlxState
 		background = new Lawn(-220, 0, "grass", 9, 5);
 		add(background);
 
+		for (i in 0...background.rowsNumber)
+			gridData[i] = [for (j in 0...background.colsNumber) []];
+
 		tileSpr = new FlxSprite().makeGraphic(Std.int(background.gridWid / background.rowsNumber), Std.int(background.gridHei / background.colsNumber),
 			0x7FFFFFFF);
 		add(tileSpr);
 
-		plant = new Plant(30, 75, "peashooter", false);
-		add(plant);
+		plantOverlay = new Plant(0, 0);
+		plantOverlay.updateHitbox();
+		plantOverlay.alpha = 0.5;
+		plantOverlay.visible = false;
+		plantOverlay.active = false;
+		add(plantOverlay);
+
+		plantGrp = new FlxTypedGroup<Plant>();
+		add(plantGrp);
 
 		houseTxt = new FlxText(300, 300);
 		houseTxt.color = FlxColor.WHITE;
@@ -85,16 +108,30 @@ class LawnState extends FlxState
 		super.update(elapsed);
 
 		// Funni thingie just gets what tile the mouse is currently on
-		curTile.x = Math.max(0, Math.min(background.rowsNumber - 1, Math.round((FlxG.mouse.x - 30 - background.tileWid / 2) / background.tileWid)));
-		curTile.y = Math.max(0, Math.min(background.colsNumber - 1, Math.round((FlxG.mouse.y - 75 - background.tileHei / 2) / background.tileHei)));
+		curRow = Std.int(Math.max(0, Math.min(background.rowsNumber - 1, Math.round((FlxG.mouse.x - 30 - background.tileWid / 2) / background.tileWid))));
+		curCol = Std.int(Math.max(0, Math.min(background.colsNumber - 1, Math.round((FlxG.mouse.y - 75 - background.tileHei / 2) / background.tileHei))));
 
-		// 20, 75 is the first tile position from 0, 0
-		tileSpr.setPosition(curTile.x * background.tileWid + 30, curTile.y * background.tileHei + 75);
+		tileSpr.visible = plantOverlay.visible = FlxG.mouse.x >= 30
+			&& FlxG.mouse.x <= background.gridWid + 30
+			&& FlxG.mouse.y >= 75
+			&& FlxG.mouse.y <= background.gridHei + 75
+			&& !gridData[curRow][curCol].contains(0);
 
-		if (FlxG.mouse.justPressed)
+		if (tileSpr.visible)
 		{
-			var plant = new Plant(tileSpr.x, tileSpr.y);
-			add(plant);
+			tileSpr.setPosition(curRow * background.tileWid + 30, curCol * background.tileHei + 75);
+			plantOverlay.setPosition(tileSpr.x + 7.5, tileSpr.y + 12.5);
+
+			if (FlxG.mouse.justPressed && plantOverlay.visible)
+			{
+				#if debug
+				trace('Planted at [Row: $curRow\tColoumn: $curCol]');
+				#end
+
+				var plant = new Plant(plantOverlay.x, plantOverlay.y);
+				plantGrp.add(plant);
+				gridData[curRow][curCol].push(0);
+			}
 		}
 	}
 }
