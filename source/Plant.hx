@@ -62,6 +62,13 @@ enum PlantableType
 	SECONDARY; // Pumpkins
 }
 
+enum DamageType
+{
+	NORMAL; // addin more later???
+	MASSIVE;
+	LIGHT;
+}
+
 enum PlantType
 {
 	ALL; // Normal Plants ect.

@@ -34,7 +34,7 @@ class AlmanacState extends FlxState{
 		exitButton.loadGraphic('assets/images/menu/almanac/Almanac_CloseButton.png', true, 89, 26);
         add(exitButton);
 
-        exitText = new FlxText(exitButton.x + 13, exitButton.y + 4);
+        exitText = new FlxText(exitButton.x + 10, exitButton.y + 4);
         exitText.text = "CLOSE";
         exitText.color = buttonColor;
         exitText.size = 16;
@@ -49,7 +49,7 @@ class AlmanacState extends FlxState{
     function exitAlmanac()
         {
             FlxG.sound.play('assets/sounds/buttonclick.ogg'); // button sound
-            FlxG.switchState(new MainMenuState());
+            FlxG.switchState(new PlantEntryPage());
         }
 
 }

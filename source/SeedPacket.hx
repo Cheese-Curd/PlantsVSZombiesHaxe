@@ -2,20 +2,24 @@ package;
 
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
-import flixel.group.FlxGroup;
+import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
 
 var priceTxt:FlxText;
+var spritePacket:FlxSprite;
 
-class SeedPacket extends FlxSprite{
+class SeedPacket extends FlxSpriteGroup{
 
     public function new(x:Float, y:Float, character:String, priceValue:Int, ?notRecommended:Bool = false, ?isSpecial:Bool = false){
         super(x,y);
-        this.loadGraphic("assets/images/ui/seedPackets/" + character + ".png");
+        spritePacket = new FlxSprite(x,y);
+        spritePacket.loadGraphic("assets/images/ui/seedPackets/" + character + ".png");
+        add(spritePacket);
         if (notRecommended)
-            this.color = FlxColor.BLACK;
-        priceTxt = new FlxText(x, y - 40, 100, '$priceValue'); // Adjust width as needed
-        //HOW DO I ADD THE TEXT
+            spritePacket.color = FlxColor.BLACK;
+        priceTxt = new FlxText(x, y - 40, 100, '$priceValue');
+        priceTxt.font = 'assets/fonts/vcr.ttf';
+        add(priceTxt);
     }
 
 
