@@ -4,22 +4,29 @@ import Plant.PlantableType;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
 import haxe.Json;
+import openfl.utils.Assets;
 
-// import utils.TilePvZ as Tile;
+// enum LawnTimes {
+// 	DAY;
+// 	NIGHT;
+// }
 
 typedef LawnData =
 {
+	var spriteOffsetX:Int;
+	var spriteOffsetY:Int;
 	var cols:Int;
 	var rows:Int;
-	var type:String;
+	//var time:LawnTimes;
 }
 
 class Lawn extends FlxSpriteGroup
 {
-	public var jsonSystem:LawnData;
+	public var lawnJson:LawnData;
 
 	public var columns:Int;
 	public var rows:Int;
+	public var type:String;
 	// public var tileZone:Tile;
 	public var lawnSprite:FlxSprite;
 
@@ -29,18 +36,23 @@ class Lawn extends FlxSpriteGroup
 	public var tileHei:Float = 100;
 	public var tileData:Array<Array<Tile>> = [];
 
-	public function new(x:Float = 0, y:Float = 0, backgroundType:String = "grass", rows:Int = 9, column:Int = 5)
+	public function new(x:Float = 0, y:Float = 0, backgroundType:String = "grass", ?row:Int = 9, ?column:Int = 5)
 	{
 		super(x, y);
 
-		this.rows = rows;
-		this.columns = column;
+		lawnJson = Json.parse(Assets.getText('assets/data/lawns/${backgroundType}.json'));
+		
+
+		this.rows = lawnJson.rows;
+		this.columns = lawnJson.cols;
+		this.type = backgroundType;
 
 		tileData = [for (i in 0...rows) [for (j in 0...column) new Tile()]];
 		lawnSprite = new FlxSprite();
-		lawnSprite.loadGraphic('assets/images/levels/grassday/grassday.png');
+		lawnSprite.loadGraphic('assets/images/levels/${backgroundType}/${backgroundType}.png');
 		lawnSprite.active = false;
-		lawnSprite.offset.x = 220;
+		lawnSprite.offset.x = lawnJson.spriteOffsetX;
+		lawnSprite.offset.y = lawnJson.spriteOffsetY;
 		add(lawnSprite);
 	}
 

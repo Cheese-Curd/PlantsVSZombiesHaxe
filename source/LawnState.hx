@@ -48,6 +48,8 @@ class LawnState extends FlxState
 	public static var curLevel:String = '1-1';
 	public static var displayLevel:String = "1-1";
 
+	public static var selectedPlant:String = '';
+
 	public var zombieList:Array<Zombie> = [];
 	public var plantList:Array<Plant> = [];
 
@@ -59,6 +61,7 @@ class LawnState extends FlxState
 	public var curCol:Int = 0;
 	public var tileSpr:FlxSprite;
 	public var plantOverlay:Plant;
+	public var seedPacketList:Array<SeedPacket>;
 
 	/*
 		Lets say we have a Peashooter. Peashooter is a normal plant, in which for example, get a plantable ID of 0. 
@@ -66,6 +69,7 @@ class LawnState extends FlxState
 		This will check if the current grid Array of that specific index is empty. 
 		If it is empty, then it will allow plants to be placed.
 	 */
+
 	override public function create()
 	{
 		// lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
@@ -89,6 +93,11 @@ class LawnState extends FlxState
 		plantOverlay.active = false;
 		add(plantOverlay);
 
+		var seedPacket = new SeedPacket(0,0,'peashooter',100);
+		seedPacket.scale.set(0.6,0.6);
+		seedPacket.updateHitbox();
+		add(seedPacket);
+
 		plantGrp = new FlxTypedGroup<Plant>();
 		add(plantGrp);
 
@@ -106,6 +115,8 @@ class LawnState extends FlxState
 	override public function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		var plantSelectedIndex:Int = Std.int(Plant.plantIDs.indexOf(selectedPlant));
 
 		// Funni thingie just gets what tile the mouse is currently on
 		curRow = Std.int(Math.max(0, Math.min(background.rows - 1, Math.round((FlxG.mouse.x - 30 - background.tileWid / 2) / background.tileWid))));
@@ -136,8 +147,8 @@ class LawnState extends FlxState
 				#if debug
 				trace('At Row ${curRow + 1}, Coloumn: ${curCol + 1}');
 				#end
-
-				currentTile.appendPlant(plantOverlay.plantableType, () -> plantGrp.add(new Plant(plantOverlay.x, plantOverlay.y)));
+				if (selectedPlant != '')
+					currentTile.appendPlant(plantOverlay.plantableType, () -> plantGrp.add(new Plant(plantOverlay.x, plantOverlay.y)));
 			}
 		}
 	}
