@@ -70,6 +70,8 @@ class LawnState extends FlxState
 		If it is empty, then it will allow plants to be placed.
 	 */
 
+	public var seedBank:FlxSprite;
+
 	override public function create()
 	{
 		// lawnJson = AngelUtils.JsonifyFile('assets/data/levels/${curLevel}');
@@ -81,6 +83,9 @@ class LawnState extends FlxState
 
 		background = new Lawn();
 		add(background);
+
+		seedBank = new FlxSprite(0,0).loadGraphic("assets/images/ui/SeedBank.png");
+		add(seedBank);
 
 		tileSpr = new FlxSprite().makeGraphic(Std.int(background.gridWid / background.rows), Std.int(background.gridHei / background.columns), 0x7FFFFFFF);
 		tileSpr.active = false;
@@ -147,8 +152,8 @@ class LawnState extends FlxState
 				#if debug
 				trace('At Row ${curRow + 1}, Coloumn: ${curCol + 1}');
 				#end
-				if (selectedPlant != '')
-					currentTile.appendPlant(plantOverlay.plantableType, () -> plantGrp.add(new Plant(plantOverlay.x, plantOverlay.y)));
+				//if (selectedPlant != '')
+				currentTile.appendPlant(plantOverlay.plantableType, () -> plantGrp.add(new Plant(plantOverlay.x, plantOverlay.y)));
 			}
 		}
 	}

@@ -36,7 +36,7 @@ class Lawn extends FlxSpriteGroup
 	public var tileHei:Float = 100;
 	public var tileData:Array<Array<Tile>> = [];
 
-	public function new(x:Float = 0, y:Float = 0, backgroundType:String = "grass", ?row:Int = 9, ?column:Int = 5)
+	public function new(x:Float = 0, y:Float = 0, backgroundType:String = "grassday", ?row:Int = 9, ?column:Int = 5)
 	{
 		super(x, y);
 
