@@ -51,9 +51,6 @@ class Animation
 typedef PlantJson =
 {
 	var textureName:String;
-	var health:Float;
-	var price:Float;
-	var isSpecial:Bool;
 	var anims:Array<AnimationData>;
 	var flipX:Bool;
 	var flipY:Bool;

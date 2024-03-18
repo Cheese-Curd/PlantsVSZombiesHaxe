@@ -61,7 +61,7 @@ class LawnState extends FlxState
 	public var curCol:Int = 0;
 	public var tileSpr:FlxSprite;
 	public var plantOverlay:Plant;
-	public var seedPacketList:Array<SeedPacket>;
+	public var seedPacketList:Array<String> = ['peashooter','peashooter'];
 
 	/*
 		Lets say we have a Peashooter. Peashooter is a normal plant, in which for example, get a plantable ID of 0. 
@@ -84,7 +84,7 @@ class LawnState extends FlxState
 		background = new Lawn();
 		add(background);
 
-		seedBank = new FlxSprite(0,0).loadGraphic("assets/images/ui/SeedBank.png");
+		seedBank = new FlxSprite(100,0).loadGraphic("assets/images/ui/SeedBank.png");
 		add(seedBank);
 
 		tileSpr = new FlxSprite().makeGraphic(Std.int(background.gridWid / background.rows), Std.int(background.gridHei / background.columns), 0x7FFFFFFF);
@@ -98,10 +98,13 @@ class LawnState extends FlxState
 		plantOverlay.active = false;
 		add(plantOverlay);
 
-		var seedPacket = new SeedPacket(0,0,'peashooter',100);
-		seedPacket.scale.set(0.6,0.6);
-		seedPacket.updateHitbox();
-		add(seedPacket);
+		for (i in 0...seedPacketList.length)
+			{
+				var seedPacket = new SeedPacket(0 + (i * 30),0,seedPacketList[i],100);
+				seedPacket.scale.set(0.6,0.6);
+				seedPacket.updateHitbox();
+				add(seedPacket);
+			}
 
 		plantGrp = new FlxTypedGroup<Plant>();
 		add(plantGrp);
@@ -115,6 +118,8 @@ class LawnState extends FlxState
 		houseTxt.size = 40;
 		houseTxt.active = false;
 		// add(houseTxt);
+
+		
 	}
 
 	override public function update(elapsed:Float)
@@ -122,6 +127,7 @@ class LawnState extends FlxState
 		super.update(elapsed);
 
 		var plantSelectedIndex:Int = Std.int(Plant.plantIDs.indexOf(selectedPlant));
+		FlxG.watch.add(plantSelectedIndex, "String", "curPlantSelected");
 
 		// Funni thingie just gets what tile the mouse is currently on
 		curRow = Std.int(Math.max(0, Math.min(background.rows - 1, Math.round((FlxG.mouse.x - 30 - background.tileWid / 2) / background.tileWid))));
@@ -144,6 +150,13 @@ class LawnState extends FlxState
 
 		if (tileSpr.visible)
 		{
+			placePlant();
+		}
+	}
+
+	private function placePlant()
+		{
+			var currentTile = background.tileData[curRow][curCol];
 			tileSpr.setPosition(curRow * background.tileWid + 30, curCol * background.tileHei + 75);
 			plantOverlay.setPosition(tileSpr.x + 7.5, tileSpr.y + 12.5);
 
@@ -152,9 +165,7 @@ class LawnState extends FlxState
 				#if debug
 				trace('At Row ${curRow + 1}, Coloumn: ${curCol + 1}');
 				#end
-				//if (selectedPlant != '')
 				currentTile.appendPlant(plantOverlay.plantableType, () -> plantGrp.add(new Plant(plantOverlay.x, plantOverlay.y)));
 			}
 		}
-	}
 }
