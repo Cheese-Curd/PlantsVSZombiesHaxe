@@ -5,7 +5,6 @@ import flixel.addons.ui.FlxUIInputText;
 import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 import AngelUtils; // for masking and reading json lol
-import DataShit; // getting data
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -50,6 +49,7 @@ class MainMenuState extends FlxState
 	var adventure_shadow:FlxSprite;
 	var minigame:FlxButton;
 	var minigame_shadow:FlxSprite;
+	var almanac:FlxButton;
 	// Pot Buttons \\
 	var options:FlxButton;
 	var help:FlxButton;
@@ -255,10 +255,18 @@ class MainMenuState extends FlxState
 		}
 		trace('[SYSTEM] Mini-Games button');
 
+		// Almanac Button \\
+		almanac = new FlxButton(405, 65, "", openAlmanac);
+		almanac.loadGraphic('assets/images/menu/mainmenu/SelectorScreen_Almanac.png', true, 99, 99);
+		almanac.y = 433;
+		almanac.x = 306;
+		trace('[SYSTEM] Almanac button');
+
 		add(adventure_shadow);
 		add(minigame_shadow);
 		add(adventure);
 		add(minigame);
+		add(almanac);
 
 		// Pot Buttons \\
 		trace('[SYSTEM] started Pot Button collection...');
@@ -281,6 +289,7 @@ class MainMenuState extends FlxState
 		if (_gamedata.data.newgame == true)
 		{
 			trace("[SYSTEM] New Adventure");
+			LawnState.curLevel = "1-1";
 		}
 		else
 		{
@@ -298,7 +307,7 @@ class MainMenuState extends FlxState
 
 		new FlxTimer().start(6.5, (tmr:FlxTimer) ->
 		{
-			FlxG.switchState(new PlayState());
+			FlxG.switchState(new LawnState());
 		});
 	}
 
@@ -308,12 +317,21 @@ class MainMenuState extends FlxState
 		if (_gamedata.data.minigames == true)
 		{
 			trace("[SYSTEM] MiniGame Unlocked");
+			FlxG.switchState(new MinigameState());
 		}
 		else
 		{
 			trace("[SYSTEM] MiniGame Locked");
+			FlxG.switchState(new MinigameState());
 		}
 	}
+
+	function openAlmanac()
+		{
+			FlxG.sound.play('assets/sounds/gravebutton.ogg'); // button sound
+			FlxG.switchState(new almanac.AlmanacState());
+
+		}
 
 	function fuckYouStop()
 	{

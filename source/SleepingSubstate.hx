@@ -5,7 +5,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
 
-class SubState extends FlxSubState
+class SleepingSubState extends FlxSubState
 {
 
 	override public function create():Void

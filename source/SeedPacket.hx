@@ -1,29 +1,40 @@
 package;
 
 import flixel.FlxSprite;
-import flixel.animation.FlxBaseAnimation;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup;
+import flixel.util.FlxColor;
+import flixel.group.FlxSpriteGroup;
 import flixel.text.FlxText;
+import flixel.FlxG;
 
-
-var seedPacketSprite:FlxSprite;
-var whatPlant:FlxSprite;
-var price:Int;
 var priceTxt:FlxText;
+var characterString:String;
+var spritePacket:FlxSprite;
 
-class SeedPacket extends FlxSprite{
-    public function new(x:Float, y:Float, character:String, ?notRecommended:Bool = false, ?isSpecial:Bool = false){
+class SeedPacket extends FlxSpriteGroup{
+
+    public function new(x:Float, y:Float, character:String, priceValue:Int, ?notRecommended:Bool = false, ?isSpecial:Bool = false){
         super(x,y);
-        
-        seedPacketSprite = new FlxSprite(0,0);
-        seedPacketSprite.loadGraphic("assets/images/ui/seedpacketNormal.png");
-        whatPlant = new FlxSprite(seedPacketSprite.x,seedPacketSprite.y);
-        whatPlant.loadGraphic("assets/images/ui/seedPackets/" + character + ".png");
-        trace("assets/images/ui/seedPackets/" + character + ".png");
-        //whatPlant = new Plant(seedPacketSprite.x,seedPacketSprite.y,character,false,true);
-        //whatPlant.setFrames(16);
+        characterString = character;
+        spritePacket = new FlxSprite(x,y);
+        spritePacket.loadGraphic("assets/images/ui/seedPackets/" + character + ".png");
+        add(spritePacket);
+        if (notRecommended)
+            spritePacket.color = FlxColor.BLACK;
+        priceTxt = new FlxText(x + 15, y + 65, 100, '$priceValue');
+        priceTxt.color = FlxColor.BLACK;
+        priceTxt.size = 20;
+        priceTxt.text = Std.string(priceValue);
+        priceTxt.font = 'assets/fonts/vcr.ttf';
+        add(priceTxt);
+    }
 
+	override function update(elapsed:Float)
+    {
+        if(FlxG.mouse.justPressed && FlxG.mouse.overlaps(this))
+            LawnState.selectedPlant = characterString;
+
+
+        super.update(elapsed);
     }
 
 

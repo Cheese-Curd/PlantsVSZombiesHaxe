@@ -10,6 +10,7 @@
           "y": 0,
           "postfix": "peashooter shoot",
           "prefix": "shoot",
+          "fps":24,
           "looped": false
         },
         {
@@ -17,6 +18,7 @@
           "y": 27,
           "postfix": "peashooter idle",
           "prefix": "idle",
+          "fps":24,
           "looped": true
         }
     ]

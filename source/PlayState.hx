@@ -2,28 +2,27 @@ package;
 
 import flixel.util.FlxSave;
 import AngelUtils; // for json reading
-import DataShit; // getting data
 import discord_rpc.DiscordRpc;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxColor;
 import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.ui.FlxButton;
 import DebugUtils; // Funny debug
 import Plant;
+import Lawn;
 import SeedPacket;
 
 class PlayState extends FlxState
 {
-	//var planttype = DataShit.plantType[0];
-	var plant:Plant;
-	var zombietype = DataShit.zombieType[0];
+	// var planttype = DataShit.plantType[0];
 	var zombie:Zombie;
 	var levelType = 'grass';
-	var background:FlxSprite;
+	var background:Lawn;
 	var backgroundGrass:FlxSprite; // reference for size and stuff
 	var seedPack:SeedPacket;
-	var grid:FlxGridOverlay;
+	var grid:FlxSprite; // for plant placement
 	var _gamedata:FlxSave;
 	var menuButton:FlxButton;
 
@@ -57,20 +56,27 @@ class PlayState extends FlxState
 	{
 		super.create();
 
-
-		background = new FlxSprite(-220, 0);
+		background = new Lawn(-220, 0, "grass", 5, 9);
 		backgroundGrass = new FlxSprite(-220, 0);
 		lostfocuspause = new FlxSprite();
+
 		getLevel();
 		add(background);
 		add(backgroundGrass);
 
-		plant = new Plant(0,0,"peashooter",false);
-		plant.screenCenter();
-		add(plant);
+		grid = FlxGridOverlay.create(1, 1, background.rows, background.columns);
+		grid.antialiasing = false;
+		grid.scale.set(90, 90);
+		grid.updateHitbox();
+		grid.x += 100;
+		add(grid);
 
-		seedPack = new SeedPacket(0,0,"peashooter");
+		zombie = new Zombie(200, 100, "basic", true);
+		add(zombie);
+
+		seedPack = new SeedPacket(0, 0, "peashooter", 100);
 		seedPack.screenCenter();
+		seedPack.x += 150;
 		add(seedPack);
 
 		menuButton = new FlxButton(681, -12, '', pauseBitch);
@@ -111,9 +117,7 @@ class PlayState extends FlxState
 		}
 	}
 
-	function pauseBitch() {
-		
-	}
+	function pauseBitch() {}
 
 	function getLevel()
 	{
@@ -127,7 +131,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday/grassday_dirt.png');
+				background.reloadImage('assets/images/levels/grassday/grassday_dirt.png');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'grass':
 				DiscordRpc.presence({
@@ -136,7 +140,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassday/grassday.png');
+				background.reloadImage('assets/images/levels/grassday/grassday.png');
 				FlxG.sound.playMusic('assets/music/grasswalk.ogg');
 			case 'night':
 				DiscordRpc.presence({
@@ -145,7 +149,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/grassnight/grassnight.jpg');
+				background.reloadImage('assets/images/levels/grassnight/grassnight.jpg');
 				FlxG.sound.playMusic('assets/music/moongrains.ogg');
 			case 'pool':
 				DiscordRpc.presence({
@@ -154,7 +158,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/poolday/poolday.jpg');
+				background.reloadImage('assets/images/levels/poolday/poolday.jpg');
 				if (_gamedata.data.fastpool == true)
 				{
 					FlxG.sound.playMusic('assets/music/watery_graves_fast.ogg'); // faster
@@ -170,7 +174,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/poolnight/poolnight.jpg');
+				background.reloadImage('assets/images/levels/poolnight/poolnight.jpg');
 				FlxG.sound.playMusic('assets/music/rigor_moris.ogg'); // play fog music and stuff
 			case 'roof':
 				DiscordRpc.presence({
@@ -181,7 +185,7 @@ class PlayState extends FlxState
 					largeImageKey: 'discord_rpc_512',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/roofday/roofday.jpg');
+				background.reloadImage('assets/images/levels/roofday/roofday.jpg');
 				FlxG.sound.playMusic('assets/music/graze_the_roof.ogg');
 			case 'roof_night':
 				DiscordRpc.presence({
@@ -192,23 +196,9 @@ class PlayState extends FlxState
 					smallImageText: 'holy shit they are about to beat the game, partly',
 					largeImageText: 'Plants VS Zombies: Haxe Edition'
 				});
-				background.loadGraphic('assets/images/levels/roofnight/roofnight.jpg');
+				background.reloadImage('assets/images/levels/roofnight/roofnight.jpg');
 				FlxG.sound.playMusic('assets/music/brainiac_maniac.ogg');
 		}
-	}
-
-	function getZombie()
-	{
-		switch (zombietype)
-		{
-			case 'basic':
-			// zombie = AngelUtils.JsonifyFile('assets/data/zombies/basic.json');
-			case 'cone':
-
-			case 'bucket':
-
-			case 'screendoor':
-		};
 	}
 
 	override public function update(elapsed:Float)
@@ -233,7 +223,7 @@ class PlayState extends FlxState
 			};
 			getLevel();
 		}
-			DebugUtils.debug(menuButton);
+		DebugUtils.debug(menuButton);
 		if (FlxG.keys.justReleased.G)
 		{
 			if (levelType == 'grass_dirt')
