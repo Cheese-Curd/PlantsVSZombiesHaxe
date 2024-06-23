@@ -1,7 +1,7 @@
 # <p align="center">Plants VS Zombies: Haxe Engine</p>
 
 PVZ: Haxe Edition is a port of PVZ (PC Version) in the coding language HaxeFlixel\
-This is also a fork of Cheese Curd's Repo lol (my discord is 'electr0gunner' hit me up, lets collab on this lol)
+
 Oh yeah if you make mods open-source them (as stated in the [Using Source Code](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine#using-source-code) section) + this: [LICENSE](https://github.com/Electr0Gunner/PlantsVSZombiesHaxeEngine/blob/main/LICENSE)
 
 ## <p align="center">Downloading</p>
